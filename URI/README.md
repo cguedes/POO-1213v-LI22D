@@ -37,5 +37,5 @@ Observações:
     /> cls & javac ap1\*.java & java -ea ap1.UriTests
 
 
-  Esta execução limpa o ecrã (`cls`), compila o código java do package ap1 (`javac ap1\*.java`) e executa o método main do tipo `ap1.UriTests` com as asserções ligadas (java -ea ap1.UriTests).
+Esta execução limpa o ecrã (`cls`), compila o código java do package ap1 (`javac ap1\*.java`) e executa o método main do tipo `ap1.UriTests` com as asserções ligadas (`java -ea ap1.UriTests`).
 
