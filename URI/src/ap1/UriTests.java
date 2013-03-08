@@ -83,6 +83,14 @@ public class UriTests {
 		System.out.println("URL: " + iselUri.toString());
 	}
 
+	public static void should_parse_mailto_uri() {
+		Uri mailtoUri = Uri.createUri("mailto:cguedes@cc.isel.ipl.pt");
+		assert mailtoUri != null;
+		assertEquals(mailtoUri.getUser(), "cguedes");
+		assertEquals(mailtoUri.getDomain(), "cc.isel.ipl.pt");
+		System.out.println("URL: " + mailtoUri.toString());
+	}
+
 	private static void assertEquals(String value, String expected)
 	{
 		if(!value.equals(expected)) {
@@ -114,6 +122,8 @@ public class UriTests {
 		should_parse_uri_with_port();
 
 		should_parse_ftp_uri();
+
+		should_parse_mailto_uri();
 
 		System.out.println("Success");
 	}
