@@ -42,6 +42,11 @@ public class Uri
     uriString = consumeHost(uriString, uri);
     if(uriString == null) return null;
 
+    if(uriString.startsWith(":")) {
+      uriString = consumePort(uriString, uri);
+      if(uriString == null) return null;
+    }
+
     uriString = consumePath(uriString, uri);
     uriString = consumeQueryString(uriString, uri);
     uriString = consumeFragment(uriString, uri);
@@ -57,11 +62,22 @@ public class Uri
 
   private static String consumeHost(String uriString, Uri uri)
   {
+    int portIdx = uriString.indexOf(":");
     int slashIdx = uriString.indexOf("/");
-    if(slashIdx == -1) return null;
-    String host = uriString.substring(0, slashIdx);
-    uri.host = host;
-    return uriString.substring(slashIdx);
+    int idx = portIdx > 0 ? portIdx : slashIdx;
+
+    if(idx == -1) return null;
+    uri.host = uriString.substring(0, idx);
+    return uriString.substring(idx);
+  }
+
+  private static String consumePort(String uriString, Uri uri)
+  {
+    int idx = uriString.indexOf("/");
+    if(idx == -1) return null;
+
+    uri.port = Short.parseShort(uriString.substring(1, idx));
+    return uriString.substring(idx);
   }
 
   private static String consumePath(String uriString, Uri uri)
