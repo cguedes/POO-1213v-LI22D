@@ -65,7 +65,7 @@ public class UriTests {
 		assertEquals(iselUri.toString(), uriText);
 	}
 
-	public static void idxshould_parse_uri_with_port()
+	public static void should_parse_uri_with_port()
 	{
 		Uri iselUri = Uri.createUri("http://www.isel.pt:8080/alunos");
 		assertEquals(iselUri.getHost(), "www.isel.pt");
@@ -102,7 +102,7 @@ public class UriTests {
 		should_parse_uri_with_host_and_path_with_querystring();
 		should_parse_uri_with_fragment();
 		should_display_uri_with_fragment();
-		idxshould_parse_uri_with_port();
+		should_parse_uri_with_port();
 
 		System.out.println("Success");
 	}
