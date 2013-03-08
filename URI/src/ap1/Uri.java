@@ -2,7 +2,7 @@ package ap1;
 
 public class Uri
 { 
-  private String host, path, queryString = "";
+  private String host, path, queryString = "", fragment = "";
   short port = -1;
 
   private Uri() { }
@@ -17,15 +17,19 @@ public class Uri
   	return path;
   }
   public String getQueryString() {
-  	return queryString;
+    return queryString;
+  }
+  public String getFragment() {
+    return fragment;
   }
 
   public String toString() {
     return java.text.MessageFormat.format(
-      "http://{0}{1}{2}",
+      "http://{0}{1}{2}{3}",
       host,
       path,
-      queryString
+      queryString.length() == 0 ? "" : "?" + queryString,
+      fragment.length() == 0 ? "" : "#" + fragment 
     );
   }
 
@@ -39,7 +43,8 @@ public class Uri
     if(uriString == null) return null;
 
     uriString = consumePath(uriString, uri);
-    if(uriString == null) return null;
+    uriString = consumeQueryString(uriString, uri);
+    uriString = consumeFragment(uriString, uri);
 
     return uri;
   }
@@ -69,7 +74,49 @@ public class Uri
     uri.path = path;
     return questionMarkIdx == -1 ?
               "" : 
-              uriString.substring(0, questionMarkIdx);
+              uriString.substring(questionMarkIdx);
   }
+
+  /**
+   * Receives: 
+   * Receives: ?query=string&key=val&otherkey
+   *                                         ^   
+   *                                         |
+   *                                        idx (-1)
+   * uri.queryString = query=string&key=val&otherkey
+   * Returns: 
+   *
+   * -- or --
+   * 
+   * Receives: ?query=string&key=val&otherkey#fragmentpart
+   *                                         ^   
+   *                                         |
+   *                                        idx
+   * uri.queryString = query=string&key=val&otherkey
+   * Returns: #fragmentpart
+   */
+  private static String consumeQueryString(String uriString, Uri uri)
+  {
+    if(!uriString.startsWith("?")) {
+      return uriString;
+    }
+
+    int idx = uriString.indexOf("#");
+    uri.queryString = idx == -1 ? uriString.substring(1) : 
+                                  uriString.substring(1, idx);
+    return idx == -1 ? "" : 
+                       uriString.substring(idx);
+  }
+
+  private static String consumeFragment(String uriString, Uri uri)
+  {
+    if(!uriString.startsWith("#")) {
+      return uriString;
+    }
+
+    uri.fragment = uriString.substring(1);
+    return "";
+  }
+
 
 }

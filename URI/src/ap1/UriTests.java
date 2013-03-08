@@ -41,17 +41,35 @@ public class UriTests {
 		assertEquals(iselUri.getHost(), "www.isel.pt");
 		assertEquals(iselUri.getPath(), "/alunos");
 		assertEquals(iselUri.getPort(), (short)-1);
-		assertEquals(iselUri.getQueryString(), "?num=22");
+		assertEquals(iselUri.getQueryString(), "num=22");
 
 		System.out.println("URL: " + iselUri.toString());
 	}
 
+	public static void should_parse_uri_with_fragment() {
+		Uri iselUri = Uri.createUri("http://www.isel.pt/alunos?num=22#fragment");
+		assert iselUri != null;
+		assertEquals(iselUri.getHost(), "www.isel.pt");
+		assertEquals(iselUri.getPath(), "/alunos");
+		assertEquals(iselUri.getPort(), (short)-1);
+		assertEquals(iselUri.getQueryString(), "num=22");
+		assertEquals(iselUri.getFragment(), "fragment");
+
+		System.out.println("URL: " + iselUri.toString());
+	}
+
+	public static void should_display_uri_with_fragment()
+	{
+		String uriText = "http://www.isel.pt/alunos?num=22#fragment";
+		Uri iselUri = Uri.createUri(uriText);
+		assertEquals(iselUri.toString(), uriText);
+	}
 
 	private static void assertEquals(String value, String expected)
 	{
 		if(!value.equals(expected)) {
 			System.err.println(
-				java.text.MessageFormat.format("Assert Error: expected value {0} instead of {1}", expected, value)
+				java.text.MessageFormat.format("Assert Error: expected value \"{0}\" instead of \"{1}\"", expected, value)
 			); 
 			assert value.equals(expected);
 		}
@@ -61,7 +79,7 @@ public class UriTests {
 	{
 		if(value != expected) {
 			System.err.println(
-				java.text.MessageFormat.format("Assert Error: expected value {0} instead of {1}", expected, value)
+				java.text.MessageFormat.format("Assert Error: expected value '{0}'' instead of '{1}'", expected, value)
 			); 
 			assert value == expected;
 		}
@@ -69,10 +87,12 @@ public class UriTests {
 
 	public static void main(String[] args) {
 		//should_fail_if_asserts_are_enabled();
-		should_not_parse_malformed_host();
-		should_parse_uri_with_host_and_default_path();
-		should_parse_uri_with_host_and_path_without_querystring();
+		//should_not_parse_malformed_host();
+		//should_parse_uri_with_host_and_default_path();
+		//should_parse_uri_with_host_and_path_without_querystring();
 		//should_parse_uri_with_host_and_path_with_querystring();
+		should_parse_uri_with_fragment();
+		should_display_uri_with_fragment();
 		System.out.println("Success");
 	}
 	
