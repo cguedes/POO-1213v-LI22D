@@ -74,6 +74,15 @@ public class UriTests {
 		System.out.println("URL: " + iselUri.toString());
 	}	
 
+	public static void should_parse_ftp_uri() {
+		Uri iselUri = Uri.createUri("ftp://www.isel.pt/software");
+		assert iselUri != null;
+		assertEquals(iselUri.getHost(), "www.isel.pt");
+		assertEquals(iselUri.getPort(), (short)-1);
+		assertEquals(iselUri.getPath(), "/software");
+		System.out.println("URL: " + iselUri.toString());
+	}
+
 	private static void assertEquals(String value, String expected)
 	{
 		if(!value.equals(expected)) {
@@ -103,6 +112,8 @@ public class UriTests {
 		should_parse_uri_with_fragment();
 		should_display_uri_with_fragment();
 		should_parse_uri_with_port();
+
+		should_parse_ftp_uri();
 
 		System.out.println("Success");
 	}

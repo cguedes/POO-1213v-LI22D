@@ -2,10 +2,14 @@ package ap1;
 
 public class Uri
 { 
-  private String host, path, queryString = "", fragment = "";
+  private String schema, host, path, queryString = "", fragment = "";
   short port = -1;
 
   private Uri() { }
+
+  public String getSchema() {
+    return schema;
+  }
 
 	public String getHost() {
 		return host;
@@ -25,7 +29,8 @@ public class Uri
 
   public String toString() {
     return java.text.MessageFormat.format(
-      "http://{0}{1}{2}{3}",
+      "{0}://{1}{2}{3}{4}",
+      schema,
       host,
       path,
       queryString.length() == 0 ? "" : "?" + queryString,
@@ -36,7 +41,11 @@ public class Uri
   public static Uri createUri(String uriString) {
   	Uri uri = new Uri();
 
-    uriString = consumeHttp(uriString, uri);
+    String schema = getSchema(uriString);
+    uri.schema = schema;
+    if(schema == null) return null;
+
+    uriString = consumeSchema(uriString, uri, schema);
     if(uriString == null) return null;
 
     uriString = consumeHost(uriString, uri);
@@ -54,10 +63,18 @@ public class Uri
     return uri;
   }
 
-  private static String consumeHttp(String uriString, Uri uri)
+  private static String getSchema(String uriString) 
   {
-    if (!uriString.startsWith("http://")) return null;
-    return uriString.substring("http://".length());
+    int idx = uriString.indexOf(":");
+    if(idx == -1) return null;
+    return uriString.substring(0, idx);
+  }
+
+  private static String consumeSchema(String uriString, Uri uri, String schema)
+  {
+    schema = schema + "://";
+    if (!uriString.startsWith(schema)) return null;
+    return uriString.substring(schema.length());
   }
 
   private static String consumeHost(String uriString, Uri uri)
