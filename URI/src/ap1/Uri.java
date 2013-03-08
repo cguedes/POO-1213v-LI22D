@@ -5,9 +5,18 @@ public class Uri
   private String schema, host, path, queryString = "", fragment = "";
   private short port = -1;
 
-  private String user, domain;
-
   private Uri() { }
+
+  public Uri(String schema, String host, short port, String path, String queryString, String fragment) {
+    this.schema = schema;
+    this.host = host;
+    this.port = port;
+    this.path = path;
+    this.queryString = queryString;
+    this.fragment = fragment;
+  }
+
+
 
   public String getSchema() {
     return schema;
@@ -30,6 +39,12 @@ public class Uri
   }
 
   // data for mailto schema
+  private String user, domain;
+  public Uri(String schema, String user, String domain) {
+    this.schema = schema;
+    this.user = user;
+    this.domain = domain;
+  }
   public String getUser() {
     return user;
   }
@@ -38,6 +53,7 @@ public class Uri
   } 
 
   public String toString() {
+    System.out.println(schema);
     if(schema.equals("mailto")) {
       return java.text.MessageFormat.format(
         "mailto:{0}@{1}",
@@ -56,18 +72,24 @@ public class Uri
   }
 
   public static Uri createUri(String uriString) {
-  	Uri uri = new Uri();
-
     String schema = getSchema(uriString);
     if(schema == null) return null;
-    uri.schema = schema;
 
     if(schema.equals("mailto")) {
       MailToUriFactory factory = new MailToUriFactory();
-      return factory.createUri(uriString, uri);
+      return factory.createUri(uriString, schema);
     }
     TcpIpUriFactory factory = new TcpIpUriFactory();
-    return factory.createUri(uriString, uri);
+    return factory.createUri(uriString, schema);
   }
+
+  private static String getSchema(String uriString) 
+  {
+    int idx = uriString.indexOf(":");
+    if(idx == -1) return null;
+    return uriString.substring(0, idx);
+  }
+
+
 
 }
