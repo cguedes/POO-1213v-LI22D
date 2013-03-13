@@ -102,10 +102,6 @@ public class Uri
     return uri;
   }
 
-  private static UriFactory mailToFactory = new MailToUriFactory();
-  private static UriFactory tcpIpFactory  = new TcpIpUriFactory();
-  private static UriFactory geoFactory    = new GeoUriFactory();
-
   private static int MAX_FACTORIES = 10;
   private static int numFactories = 0;
   private static UriFactory[] uriFactories = new UriFactory[MAX_FACTORIES];
