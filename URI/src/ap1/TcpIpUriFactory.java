@@ -41,7 +41,7 @@ public class TcpIpUriFactory implements UriFactory
     uriString = consumeQueryString(uriString);
     uriString = consumeFragment(uriString);
 
-    return new Uri(schema, host, port, path, queryString, fragment);
+    return new UrlUri(schema, host, port, path, queryString, fragment);
   }
 
   private String consumeSchema(String uriString, String schema)

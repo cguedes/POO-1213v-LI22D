@@ -17,7 +17,7 @@ public class MailToUriFactory implements UriFactory
     if(uriString == null) return null;
 
     uriString = consumeDomain(uriString);
-    return new Uri(schema, user, domain);
+    return new MailToUri(user, domain);
   }
 
   private String consumeSchema(String uriString) {

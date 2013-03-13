@@ -17,7 +17,7 @@ public class GeoUriFactory implements UriFactory
     float latitude  = Float.parseFloat(parts[0]);
     float longitude = Float.parseFloat(parts[1]);
 
-    return new Uri("geo", latitude, longitude);
+    return new GeoUri(latitude, longitude);
   }
 
 
