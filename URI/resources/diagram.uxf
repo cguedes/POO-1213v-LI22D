@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="12.0">
+  <zoom_level>9</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>927</x>
+      <y>72</y>
+      <w>225</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;interface&gt;&gt;
+ap1::UriFactory
+--
+--
+createUri(String uriString, String schema): Uri
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1017</x>
+      <y>135</y>
+      <w>44</w>
+      <h>323</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>27;27;27;306</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>909</x>
+      <y>441</y>
+      <w>270</w>
+      <h>81</h>
+    </coordinates>
+    <panel_attributes>ap1::GeoUriFactory
+--
+--
++canCreate(String schema): boolean
++createUri(String uriString, String schema): Uri
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>1116</x>
+      <y>279</y>
+      <w>270</w>
+      <h>99</h>
+    </coordinates>
+    <panel_attributes>ap1::MailToUriFactory
+--
+-user, domain: String
+--
++canCreate(String schema): boolean
++createUri(String uriString, String schema): Uri
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>45</x>
+      <y>45</y>
+      <w>549</w>
+      <h>396</h>
+    </coordinates>
+    <panel_attributes>ap1::Uri
+--
+-schema, host, path, queryString = "", fragment = "": String
+-port = -1: short
+-user, domain: String
+-mailToFactory = new MailToUriFactory(): UriFactory
+-tcpIpFactory = new TcpIpUriFactory(): UriFactory
+-geoFactory = new GeoUriFactory(): UriFactory
+-MAX_FACTORIES = 2: int
+-numFactories = 0: int
+-uriFactories = new UriFactory[MAX_FACTORIES]: UriFactory[]
+--
++Uri(String schema, String host, short port, String path, String queryString, String fragment): ctor
++Uri(String schema, String user, String domain): ctor
++getSchema(): String
++getHost(): String
++getPort(): short
++getPath(): String
++getQueryString(): String
++getFragment(): String
++getUser(): String
++getDomain(): String
++toString(): String
++createUri(String uriString): Uri
++addUriFactory(UriFactory factory): boolean
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>666</x>
+      <y>279</y>
+      <w>333</w>
+      <h>117</h>
+    </coordinates>
+    <panel_attributes>ap1::TcpIpUriFactory
+--
+-schema, host, path, queryString = "", fragment = "": String
+-port = -1: short
+--
++canCreate(String schema): boolean
++createUri(String uriString, String schema): Uri
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>63</x>
+      <y>414</y>
+      <w>106</w>
+      <h>224</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;.
+&lt;&lt;tests&gt;&gt;</panel_attributes>
+    <additional_attributes>54;27;54;207</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>1017</x>
+      <y>135</y>
+      <w>251</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>27;27;27;108;234;108;234;144</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>828</x>
+      <y>135</y>
+      <w>233</w>
+      <h>161</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;.</panel_attributes>
+    <additional_attributes>216;27;216;108;27;108;27;144</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>36</x>
+      <y>621</y>
+      <w>387</w>
+      <h>225</h>
+    </coordinates>
+    <panel_attributes>ap1::UriTests
+--
+--
++should_fail_if_asserts_are_enabled(): void
++should_not_parse_malformed_host(): void
++should_parse_uri_with_host_and_default_path(): void
++should_parse_uri_with_host_and_path_without_querystring(): void
++should_parse_uri_with_host_and_path_with_querystring(): void
++should_parse_uri_with_fragment(): void
++should_display_uri_with_fragment(): void
++should_parse_uri_with_port(): void
++should_parse_ftp_uri(): void
++should_parse_mailto_uri(): void
++main(String[] args): void
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>567</x>
+      <y>90</y>
+      <w>377</w>
+      <h>44</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=* factories</panel_attributes>
+    <additional_attributes>27;27;360;27</additional_attributes>
+  </element>
+</diagram>
