@@ -1,6 +1,14 @@
 package ap1;
 
-public class TcpIpUriFactory
+/**
+ * EXEMPLO DE UTILIZAÇÃO DE INTERFACES
+ *  
+ * UriFactory uriFactory = new TcpIpUriFactory();
+ * uriFactory.createUri("...", "...");       // OK :-) O método createUri está definido na interface UriFactory
+ * uriFactory.someMethodFromTcpIpFactory();  // ERRO porque a variável uriFactory é do tipo UriFactory (não tem este método!). O objecto referenciado pela variável é que é do tipo TcpIpUriFactory. 
+ *
+ */
+public class TcpIpUriFactory implements UriFactory
 { 
   private String schema, host, path, queryString = "", fragment = "";
   private short port = -1;

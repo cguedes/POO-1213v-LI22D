@@ -1,6 +1,6 @@
 package ap1;
 
-public class MailToUriFactory
+public class MailToUriFactory implements UriFactory
 { 
   private String user, domain;
   public Uri createUri(String uriString, String schema) {

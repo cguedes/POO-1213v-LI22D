@@ -75,12 +75,24 @@ public class Uri
     String schema = getSchema(uriString);
     if(schema == null) return null;
 
+    UriFactory uriFactory = getFactoryForSchema(schema);
+    if(uriFactory == null) return null;
+    Uri uri = uriFactory.createUri(uriString, schema);
+    return uri;
+  }
+
+  private static UriFactory mailToFactory = new MailToUriFactory();
+  private static UriFactory tcpIpFactory = new TcpIpUriFactory();
+
+  private static UriFactory getFactoryForSchema(String schema)
+  {
     if(schema.equals("mailto")) {
-      MailToUriFactory factory = new MailToUriFactory();
-      return factory.createUri(uriString, schema);
+      return mailToFactory;
     }
-    TcpIpUriFactory factory = new TcpIpUriFactory();
-    return factory.createUri(uriString, schema);
+    if(schema.equals("http") || schema.equals("ftp")) {
+      return tcpIpFactory;
+    }
+    return null;
   }
 
   private static String getSchema(String uriString) 
