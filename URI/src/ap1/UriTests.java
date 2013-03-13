@@ -91,6 +91,14 @@ public class UriTests {
 		System.out.println("URL: " + mailtoUri.toString());
 	}
 
+	public static void should_parse_geo_uri() {
+		Uri uri = Uri.createUri("geo:38.755611, -9.116464");
+		assert uri != null;
+		assertEquals(uri.getLatitude(), 38.755611f);
+		assertEquals(uri.getLongitude(), -9.116464f);
+		System.out.println("URL: " + uri.toString());
+	}
+
 	private static void assertEquals(String value, String expected)
 	{
 		if(!value.equals(expected)) {
@@ -111,13 +119,20 @@ public class UriTests {
 		}
 	}
 
+	private static void assertEquals(float value, float expected)
+	{
+		if(value != expected) {
+			System.err.println(
+				java.text.MessageFormat.format("Assert Error: expected value {0} instead of {1}", expected, value)
+			); 
+			assert value == expected;
+		}
+	}
+
 	public static void main(String[] args) {
+		//should_fail_if_asserts_are_enabled();
 
 		Uri.addUriFactory(new TcpIpUriFactory());
-		Uri.addUriFactory(new MailToUriFactory());
-		Uri.addUriFactory(new GeoUriFactory());
-
-		//should_fail_if_asserts_are_enabled();
 		should_not_parse_malformed_host();
 		should_parse_uri_with_host_and_default_path();
 		should_parse_uri_with_host_and_path_without_querystring();
@@ -125,10 +140,13 @@ public class UriTests {
 		should_parse_uri_with_fragment();
 		should_display_uri_with_fragment();
 		should_parse_uri_with_port();
-
 		should_parse_ftp_uri();
 
+		Uri.addUriFactory(new MailToUriFactory());
 		should_parse_mailto_uri();
+
+		Uri.addUriFactory(new GeoUriFactory());
+		should_parse_geo_uri();
 
 		System.out.println("Success");
 	}

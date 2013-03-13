@@ -52,8 +52,29 @@ public class Uri
     return domain;
   } 
 
+  // ---- data for geo schema
+  private float latitude, longitude;
+  public Uri(String schema, float latitude, float longitude) {
+    this.schema = schema;
+    this.latitude = latitude;
+    this.longitude = longitude;
+  }
+
+  public float getLatitude() { return latitude; }
+  public float getLongitude() { return longitude; }
+
+
   public String toString() {
     System.out.println(schema);
+    if(schema.equals("geo")) {
+      return java.text.MessageFormat.format(
+        "geo:{0}, {1}",
+        latitude,
+        longitude
+      );
+    }
+
+
     if(schema.equals("mailto")) {
       return java.text.MessageFormat.format(
         "mailto:{0}@{1}",
@@ -85,7 +106,7 @@ public class Uri
   private static UriFactory tcpIpFactory  = new TcpIpUriFactory();
   private static UriFactory geoFactory    = new GeoUriFactory();
 
-  private static int MAX_FACTORIES = 2;
+  private static int MAX_FACTORIES = 10;
   private static int numFactories = 0;
   private static UriFactory[] uriFactories = new UriFactory[MAX_FACTORIES];
   public static boolean addUriFactory(UriFactory factory) {
