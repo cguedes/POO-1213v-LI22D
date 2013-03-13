@@ -112,6 +112,11 @@ public class UriTests {
 	}
 
 	public static void main(String[] args) {
+
+		Uri.addUriFactory(new TcpIpUriFactory());
+		Uri.addUriFactory(new MailToUriFactory());
+		Uri.addUriFactory(new GeoUriFactory());
+
 		//should_fail_if_asserts_are_enabled();
 		should_not_parse_malformed_host();
 		should_parse_uri_with_host_and_default_path();

@@ -3,6 +3,11 @@ package ap1;
 public class MailToUriFactory implements UriFactory
 { 
   private String user, domain;
+
+  public boolean canCreate(String schema) {
+    return schema.equals("mailto");
+  }
+
   public Uri createUri(String uriString, String schema) {
     
     uriString = consumeSchema(uriString);

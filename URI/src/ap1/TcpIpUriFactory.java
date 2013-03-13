@@ -13,8 +13,19 @@ public class TcpIpUriFactory implements UriFactory
   private String schema, host, path, queryString = "", fragment = "";
   private short port = -1;
 
+  private void resetDefaults() {
+    queryString = fragment = "";
+    port = -1;
+  }
+
+  public boolean canCreate(String schema) {
+    return schema.equals("http") || schema.equals("ftp");
+  }
+
   public Uri createUri(String uriString, String schema) 
   {
+    resetDefaults();
+
     uriString = consumeSchema(uriString, schema);
     if(uriString == null) return null;
 

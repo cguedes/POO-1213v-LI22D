@@ -82,15 +82,26 @@ public class Uri
   }
 
   private static UriFactory mailToFactory = new MailToUriFactory();
-  private static UriFactory tcpIpFactory = new TcpIpUriFactory();
+  private static UriFactory tcpIpFactory  = new TcpIpUriFactory();
+  private static UriFactory geoFactory    = new GeoUriFactory();
+
+  private static int MAX_FACTORIES = 2;
+  private static int numFactories = 0;
+  private static UriFactory[] uriFactories = new UriFactory[MAX_FACTORIES];
+  public static boolean addUriFactory(UriFactory factory) {
+    if(numFactories == MAX_FACTORIES) return false;
+    uriFactories[numFactories++] = factory;
+    return true;
+  }
 
   private static UriFactory getFactoryForSchema(String schema)
   {
-    if(schema.equals("mailto")) {
-      return mailToFactory;
-    }
-    if(schema.equals("http") || schema.equals("ftp")) {
-      return tcpIpFactory;
+    for (int i = 0; i < uriFactories.length; ++i) {
+      UriFactory factory = uriFactories[i];
+      if(factory == null) break;
+
+      if(factory.canCreate(schema))
+        return factory;
     }
     return null;
   }
