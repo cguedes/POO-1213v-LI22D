@@ -2,7 +2,7 @@ package ap1;
 
 public class Uri
 { 
-  private String schema;
+  protected String schema;
   public String getSchema() { return schema; }
 
   public Uri(String schema) {
