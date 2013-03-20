@@ -1,9 +1,11 @@
 
 public class Game {
 
+  private static java.util.Scanner kbd = new java.util.Scanner(System.in); 
+
   private static char[][] board = new char[8][23];
   private static int boardRow = 0;
-  private static int raiderX, raiderY;
+  private static Point raiderPosition = new Point();
 
 
   private static void addBoardRow(String row) {
@@ -11,8 +13,7 @@ public class Game {
       char actor = row.charAt(i);
       board[boardRow][i] = actor;
       if(actor == 'R') {
-        raiderX = i;
-        raiderY = boardRow;
+        raiderPosition.set(i, boardRow);
       }
     }
     ++boardRow;
@@ -33,13 +34,31 @@ public class Game {
     board[y][x] = symbol;
   }
 
-  private static void moveRaiderTo(int newX, int newY) {
-    setBoard(raiderX, raiderY, ' ');
+  private static void setBoard(Point p, char symbol) 
+  {
+    setBoard(p.x, p.y, symbol);
+  }
+
+  private static void moveRaiderTo(Point raiderPosition) {
+    setBoard(raiderPosition, ' ');
     
-    raiderX = newX;
-    raiderY = newY;
+    raiderPosition.set(raiderPosition.x, raiderPosition.y);
    
-    setBoard(raiderX, raiderY, 'R');
+    setBoard(raiderPosition, 'R');
+  }
+
+  private static Point getDirection() {
+      System.out.print("Choose direction (ASDW): ");
+      char key = kbd.next().charAt(0);
+      key = Character.toUpperCase(key);
+      Point direction = new Point();
+      switch(key) {
+        case 'A': direction.set(-1,  0); break;
+        case 'D': direction.set(+1,  0); break;
+        case 'S': direction.set( 0, +1); break;
+        case 'W': direction.set( 0, -1); break;
+      }
+      return direction;
   }
 
   public static void main(String[] args) 
@@ -62,23 +81,12 @@ public class Game {
     moveRaiderTo(raiderX + 1, raiderY);
     showBoard();
     */
-    java.util.Scanner kbd = new java.util.Scanner(System.in); 
 
     while(true) 
     {
-      // Get direction
-      System.out.print("Choose direction (ASDW): ");
-      char key = kbd.next().charAt(0);
-      key = Character.toUpperCase(key);
-      int dx = 0, dy = 0;
-      switch(key) {
-        case 'A': dx = -1; break;
-        case 'S': dy = +1; break;
-        case 'D': dx = +1; break;
-        case 'W': dy = -1; break;
-      }
-
-      moveRaiderTo(raiderX + dx, raiderY + dy);
+      Point dir = getDirection();
+      raiderPosition.add(dir);
+      moveRaiderTo(raiderPosition);
       showBoard();
     }
 
