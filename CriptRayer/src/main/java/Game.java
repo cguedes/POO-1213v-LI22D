@@ -7,6 +7,12 @@ public class Game {
   private static int boardRow = 0;
   private static Point raiderPosition = new Point();
 
+  private static char TILE_EMPTY    = ' ';
+  private static char TILE_WALL     = '#';
+  private static char TILE_ROCK     = '%';
+  private static char TILE_CARTER   = 'R';
+  private static char TILE_SAND     = '*';
+  private static char TILE_ARTIFACT = 'o';
 
   private static void addBoardRow(String row) {
     for (int i = 0; i < row.length(); ++i) {
@@ -39,12 +45,28 @@ public class Game {
     setBoard(p.x, p.y, symbol);
   }
 
-  private static void moveRaiderTo(Point raiderPosition) {
-    setBoard(raiderPosition, ' ');
-    
-    raiderPosition.set(raiderPosition.x, raiderPosition.y);
-   
-    setBoard(raiderPosition, 'R');
+  private static char getBoardTile(Point p) {
+    return board[p.y][p.x];
+  }
+
+  private static void moveRaiderTo(Point newPosition) {
+    setBoard(raiderPosition, TILE_EMPTY);
+    raiderPosition.set(newPosition.x, newPosition.y);
+    setBoard(raiderPosition, TILE_CARTER);
+  }
+
+  private static boolean canMove(Point newPosition) {
+
+    char tile = getBoardTile(newPosition);
+    if(tile == TILE_EMPTY || 
+       tile == TILE_SAND  ||
+       tile == TILE_ARTIFACT
+     ) 
+    {
+      return true;
+    }
+    return false;
+
   }
 
   private static Point getDirection() {
@@ -65,28 +87,26 @@ public class Game {
   {
     System.out.println("======== CryptRaider ========");
     addBoardRow("#######################");
-    addBoardRow("#                     #");
-    addBoardRow("#     R ###  ### ###  #");
-    addBoardRow("#       # #  # # # #  #");
-    addBoardRow("#       ###  # # # #  #");
-    addBoardRow("#       #    ### ###  #");
-    addBoardRow("#                     #");
+    addBoardRow("#       ***           #");
+    addBoardRow("#  %    ###  ### ###  #");
+    addBoardRow("#  %    # #  # # # #  #");
+    addBoardRow("#  %%   ###  # # # #  #");
+    addBoardRow("#  %    #    ### ###  #");
+    addBoardRow("#     R o             #");
     addBoardRow("#######################");
 
     showBoard();
 
-    /*/ "hardcoded" move of Raider to right two times
-    moveRaiderTo(raiderX + 1, raiderY);
-    showBoard();
-    moveRaiderTo(raiderX + 1, raiderY);
-    showBoard();
-    */
-
     while(true) 
     {
-      Point dir = getDirection();
-      raiderPosition.add(dir);
-      moveRaiderTo(raiderPosition);
+      Point newPosition = new Point(raiderPosition);
+      newPosition.add(getDirection());
+
+      if(canMove(newPosition)) 
+      {
+        moveRaiderTo(newPosition);
+      }
+
       showBoard();
     }
 

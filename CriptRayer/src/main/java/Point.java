@@ -3,6 +3,14 @@ public class Point {
 
   public int x, y;
 
+  public Point() {
+    set(0, 0);
+  }
+
+  public Point(Point p) {
+    set(p.x, p.y);
+  }
+
   public void set(int _x, int _y)
   {
     x = _x;
