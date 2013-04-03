@@ -12,20 +12,22 @@ public class Board {
     actors[numActors++] = actor;
   }
 
-  private Actor getActorAt(int x, int y) {
+  private Actor getActorAt(Point position) {
     for (int i = 0; i < actors.length; ++i) {
       Actor actor = actors[i];
-      if(actor != null && actor.position.x == x && actor.position.y == y)
+      if(actor != null && actor.getPosition().equals(position))
         return actor;
     }
     return null;
   }
 
   public void draw() {
+    Point position = new Point();
     System.out.println();
     for (int r = 0; r < NUM_ROWS; ++r) {
       for (int c = 0; c < NUM_COLS; ++c) {
-          Actor actor = getActorAt(c, r);
+          position.set(c, r);
+          Actor actor = getActorAt(position);
           if(actor != null) {
             actor.draw();
           }

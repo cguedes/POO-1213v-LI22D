@@ -27,4 +27,14 @@ public class Point {
     y += p.y;
   }
 
+@Override
+  public boolean equals(Object other) {
+    if(other == null) return false;
+    if(other == this) return true;
+    if(!(other instanceof Point)) return false;
+
+    Point otherPoint = (Point)other;
+    return this.x == otherPoint.x && this.y == otherPoint.y;
+  }
+
 }
