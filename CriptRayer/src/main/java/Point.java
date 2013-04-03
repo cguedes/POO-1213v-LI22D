@@ -11,6 +11,10 @@ public class Point {
     set(p.x, p.y);
   }
 
+  public Point(int x, int y) {
+    set(x, y);
+  }
+
   public void set(int _x, int _y)
   {
     x = _x;
