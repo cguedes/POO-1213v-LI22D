@@ -9,16 +9,14 @@ public class NonBlockingInput implements Input, KeyListener {
 
     public NonBlockingInput() {
       releaseAllKeys();
-      JFrame frame = new JFrame();
-      frame.getContentPane().add(new JLabel("bla bla"));
+      JFrame frame = new JFrame("NonBlockingInput");
+      frame.add(new JLabel("Choose direction (ASDW)"));
       frame.pack();
       frame.addKeyListener(this);
       frame.setVisible(true);
     }
 
     public void update() {
-      releaseAllKeys();
-      
     }
 
     public boolean isKeyDown(char key){
@@ -33,10 +31,14 @@ public class NonBlockingInput implements Input, KeyListener {
 
 
    public void keyPressed(KeyEvent e)  {
-    keysDown[e.getKeyChar()] = true;
+      char key = Character.toUpperCase(e.getKeyChar());
+      keysDown[key] = true;
    }
 
-   public void keyReleased(KeyEvent e)  {}
+   public void keyReleased(KeyEvent e)  {
+      char key = Character.toUpperCase(e.getKeyChar());
+      keysDown[key] = false;    
+   }
    public void keyTyped(KeyEvent e) {}
 
 
