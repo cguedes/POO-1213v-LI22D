@@ -39,6 +39,13 @@ public class Board {
     }
   }
 
+  public void update() {
+    for (int i = 0; i < actors.length; ++i) {
+      Actor actor = actors[i];
+      if(actor != null) actor.update();
+    }
+  }  
+
 
 
 

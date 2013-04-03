@@ -13,6 +13,8 @@ public class Actor {
     return position;
   }
 
+  public void update() { }
+
   public void draw() {
     System.out.print(symbol);
   }

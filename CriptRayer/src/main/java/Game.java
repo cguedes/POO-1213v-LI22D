@@ -1,7 +1,7 @@
 
 public class Game {
 
-  private static final Input input = new Input();
+  public static final Input input = new Input();
   private static final Board board = new Board();
 
   private static int boardRow = 0;
@@ -34,7 +34,7 @@ public class Game {
     while(true) 
     {
       input.update();
-      //board.update();
+      board.update();
       board.draw();
     }
 
