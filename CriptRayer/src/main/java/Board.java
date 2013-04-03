@@ -12,7 +12,7 @@ public class Board {
     actors[numActors++] = actor;
   }
 
-  private Actor getActorAt(Point position) {
+  public Actor getActorAt(Point position) {
     for (int i = 0; i < actors.length; ++i) {
       Actor actor = actors[i];
       if(actor != null && actor.getPosition().equals(position))

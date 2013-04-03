@@ -13,7 +13,14 @@ public class Carter extends Actor {
     if(Game.input.isKeyDown('D')) direction.set(+1,  0);
     if(Game.input.isKeyDown('W')) direction.set( 0, -1);
     if(Game.input.isKeyDown('S')) direction.set( 0, +1);
-    this.getPosition().add(direction);
+
+    Point nextPosition = new Point(this.getPosition());
+    nextPosition.add(direction);
+
+    Actor actor = Game.board.getActorAt(nextPosition);
+    if(actor == null) {
+      this.getPosition().set(nextPosition.x, nextPosition.y);
+    }
   }
 
 

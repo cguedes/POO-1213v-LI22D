@@ -2,7 +2,7 @@
 public class Game {
 
   public static final Input input = new Input();
-  private static final Board board = new Board();
+  public static final Board board = new Board();
 
   private static int boardRow = 0;
   // usage: addBoardRow("#  %    # #  # # # #  #");
