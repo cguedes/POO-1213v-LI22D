@@ -8,7 +8,7 @@ public class Board {
 
   public void addActor(char symbol, Point position)
   {
-    Actor actor = new Actor(symbol, position);
+    Actor actor = Actor.createActor(symbol, position);
     actors[numActors++] = actor;
   }
 

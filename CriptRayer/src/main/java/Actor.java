@@ -17,14 +17,21 @@ public class Actor {
     System.out.print(symbol);
   }
 
+  public static Actor createActor(char symbol, Point position) {
+    switch (symbol) {
+      case 'R':
+        return new Carter(position);
+      case '#':
+      case '%':
+      case '*':
+      case 'o':
+        return new Actor(symbol, position);
+      case ' ':
+      default:
+        return null;
+    }
+  }
+
 
 }
 
-  /*
-  private static char TILE_EMPTY    = ' ';
-  private static char TILE_WALL     = '#';
-  private static char TILE_ROCK     = '%';
-  private static char TILE_CARTER   = 'R';
-  private static char TILE_SAND     = '*';
-  private static char TILE_ARTIFACT = 'o';
-  */
