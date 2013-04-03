@@ -1,7 +1,9 @@
 
 public class Game {
 
-  public static final Input input = new Input();
+  //public static final Input input = new ScannerInput();
+  public static final Input input = new GUIInput();
+  
   public static final Board board = new Board();
 
   private static int boardRow = 0;
@@ -17,7 +19,7 @@ public class Game {
   }
 
 
-  public static void main(String[] args) 
+  public static void main(String[] args) throws InterruptedException
   {
     System.out.println("======== CryptRaider ========");
     addBoardRow("#######################");
@@ -36,6 +38,9 @@ public class Game {
       input.update();
       board.update();
       board.draw();
+
+      // Aguardar 100ms
+      Thread.sleep(100);
     }
 
   }
