@@ -23,12 +23,12 @@ public class Game {
   {
     System.out.println("======== CryptRaider ========");
     addBoardRow("#######################");
-    addBoardRow("#       ***           #");
+    addBoardRow("#       ***   o       #");
     addBoardRow("#  %    ###  ### ###  #");
     addBoardRow("#  %    # #  # # # #  #");
     addBoardRow("#  %%   ###  # # # #  #");
     addBoardRow("#  %    #    ### ###  #");
-    addBoardRow("#     R o             #");
+    addBoardRow("#     R o   o         #");
     addBoardRow("#######################");
 
     board.draw();
