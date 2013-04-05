@@ -1,13 +1,8 @@
-public class ScannerInput implements Input {
+public class ScannerInput extends AbstractInput {
     
     private static java.util.Scanner kbd = new java.util.Scanner(System.in); 
 
-    private boolean[] keysDown = new boolean[255];
-
-    public ScannerInput() {
-      releaseAllKeys();
-    }
-
+    @Override
     public void update() {
       releaseAllKeys();
       
@@ -15,16 +10,6 @@ public class ScannerInput implements Input {
       char key = kbd.next().charAt(0);
       key = Character.toUpperCase(key);
       keysDown[key] = true;
-    }
-
-    public boolean isKeyDown(char key){
-      return keysDown[key];
-    }
-
-    private void releaseAllKeys() {
-      for (int i = 0; i < keysDown.length; i++) {
-        keysDown[i] = false;
-      }      
     }
 
 }
