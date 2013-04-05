@@ -23,6 +23,8 @@ public class Actor {
     switch (symbol) {
       case 'R':
         return new Carter(position);
+      case ':':
+        return new Bug(position);
       case '#':
       case '%':
       case '*':

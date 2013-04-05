@@ -1,8 +1,8 @@
 
 public class Game {
 
-  public static final Input input = new ScannerInput();
-  //public static final Input input = new NonBlockingInput();
+  //public static final Input input = new ScannerInput();
+  public static final Input input = new NonBlockingInput();
   
   public static final Board board = new Board();
 
@@ -24,7 +24,7 @@ public class Game {
     System.out.println("======== CryptRaider ========");
     addBoardRow("#######################");
     addBoardRow("#       ***   o       #");
-    addBoardRow("#  %    ###  ### ###  #");
+    addBoardRow("#  %    ###  ### ### :#");
     addBoardRow("#  %    # #  # # # #  #");
     addBoardRow("#  %%   ###  # # # #  #");
     addBoardRow("#  %    #    ### ###  #");
