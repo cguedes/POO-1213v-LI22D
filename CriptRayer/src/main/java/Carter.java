@@ -21,6 +21,8 @@ public class Carter extends Actor {
     if(actor == null) {
       this.getPosition().set(nextPosition.x, nextPosition.y);
     }
+
+    
   }
 
 
