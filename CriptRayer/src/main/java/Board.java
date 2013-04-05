@@ -21,6 +21,16 @@ public class Board {
     return null;
   }
 
+  public void removeActor(Actor actorToRemove) {
+    for (int i = 0; i < actors.length; ++i) {
+      Actor actor = actors[i];
+      if(actor == actorToRemove) {
+        actors[i] = null;
+        return;
+      }
+    }
+  }
+
   public void draw() {
     Point position = new Point();
     System.out.println();

@@ -22,6 +22,10 @@ public class Carter extends Actor {
       this.getPosition().set(nextPosition.x, nextPosition.y);
     }
 
+    if(actor instanceof Dirt) {
+      Game.board.removeActor(actor);
+      this.getPosition().set(nextPosition.x, nextPosition.y);
+    }
     
   }
 
