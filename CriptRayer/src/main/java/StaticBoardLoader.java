@@ -14,7 +14,7 @@ public class StaticBoardLoader {
     addBoardRow(game, "#  %%   ###  # # # #  #");
     addBoardRow(game, "#  %    #    ### ###  #");
     addBoardRow(game, "#     R o   o         #");
-    addBoardRow(game, "#######################");
+    addBoardRow(game, "##############U########");
   }
 
   private static int boardRow = 0;

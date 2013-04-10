@@ -43,7 +43,7 @@ public abstract class Actor {
     case ' ':
       return new Empty(position, game);
     default:
-      return null;
+      throw new InvalidActorException(symbol, position);
     }
   }
 

@@ -1,11 +1,13 @@
 package crypt.actor;
 
+import java.text.MessageFormat;
+
 public class Point {
 
-  public static final Point LEFT  = new Point(-1,  0);
-  public static final Point RIGHT = new Point(+1,  0);
-  public static final Point UP    = new Point( 0, -1);
-  public static final Point DOWN  = new Point( 0, +1);
+  public static final Point LEFT = new Point(-1, 0);
+  public static final Point RIGHT = new Point(+1, 0);
+  public static final Point UP = new Point(0, -1);
+  public static final Point DOWN = new Point(0, +1);
 
   public int x, y;
 
@@ -33,14 +35,22 @@ public class Point {
     y += p.y;
   }
 
-@Override
+  @Override
   public boolean equals(Object other) {
-    if(other == null) return false;
-    if(other == this) return true;
-    if(!(other instanceof Point)) return false;
+    if (other == null)
+      return false;
+    if (other == this)
+      return true;
+    if (!(other instanceof Point))
+      return false;
 
-    Point otherPoint = (Point)other;
+    Point otherPoint = (Point) other;
     return this.x == otherPoint.x && this.y == otherPoint.y;
+  }
+
+  @Override
+  public String toString() {
+    return MessageFormat.format("({0}, {1})", x, y);
   }
 
 }
