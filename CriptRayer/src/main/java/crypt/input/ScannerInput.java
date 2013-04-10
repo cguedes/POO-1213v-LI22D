@@ -1,3 +1,4 @@
+package crypt.input;
 public class ScannerInput extends AbstractInput {
     
     private static java.util.Scanner kbd = new java.util.Scanner(System.in); 

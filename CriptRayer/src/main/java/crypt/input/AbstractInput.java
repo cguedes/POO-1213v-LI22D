@@ -1,3 +1,4 @@
+package crypt.input;
 
 public abstract class AbstractInput implements Input {
     

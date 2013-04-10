@@ -1,3 +1,7 @@
+package crypt;
+
+import crypt.actor.Actor;
+import crypt.actor.Point;
 
 public class Board {
   

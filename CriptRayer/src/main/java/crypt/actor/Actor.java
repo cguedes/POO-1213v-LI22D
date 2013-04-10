@@ -1,3 +1,4 @@
+package crypt.actor;
 
 public abstract class Actor {
   

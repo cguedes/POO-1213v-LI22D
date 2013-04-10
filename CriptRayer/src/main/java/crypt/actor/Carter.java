@@ -1,3 +1,6 @@
+package crypt.actor;
+
+import crypt.Game;
 
 public class Carter extends Actor {
   
