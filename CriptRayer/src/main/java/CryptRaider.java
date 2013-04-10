@@ -1,4 +1,6 @@
 import crypt.Game;
+import crypt.boardloader.BoardLoader;
+import crypt.boardloader.FixedStringBoardLoader;
 
 public class CryptRaider {
 
@@ -6,9 +8,14 @@ public class CryptRaider {
   {
     System.out.println("======== CryptRaider ========");
     Game game = new Game();
-    StaticBoardLoader.loadBoard(game);
+    getBoardLoader().load(game);
     game.run();
 
+  }
+
+  private static BoardLoader getBoardLoader() {
+    return new FixedStringBoardLoader();
+    // return new OriginalGameBoardLoader(1);
   }
 
 }

@@ -1,12 +1,14 @@
+package crypt.boardloader;
+
 import crypt.Game;
 import crypt.actor.Point;
 
-public class StaticBoardLoader {
+public class FixedStringBoardLoader implements BoardLoader {
 
-  // TODO: O código em baixo deve ser movido para
-  // um tipo que implemente um "BoardLoader"
+  private int boardRow = 0;
 
-  public static void loadBoard(Game game) {
+  @Override
+  public void load(Game game) {
     addBoardRow(game, "#######################");
     addBoardRow(game, "#       ***   o       #");
     addBoardRow(game, "#  %    ###  ### ### :#");
@@ -17,10 +19,8 @@ public class StaticBoardLoader {
     addBoardRow(game, "#######################");
   }
 
-  private static int boardRow = 0;
-
   // usage: addBoardRow("#  %    # #  # # # #  #");
-  private static void addBoardRow(Game game, String row) {
+  private void addBoardRow(Game game, String row) {
     Point actorPosition = new Point(0, boardRow);
     for (int i = 0; i < row.length(); ++i) {
       char symbol = row.charAt(i);
