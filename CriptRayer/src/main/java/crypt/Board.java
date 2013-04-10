@@ -1,16 +1,22 @@
 package crypt;
 
 import crypt.actor.Actor;
+import crypt.actor.Empty;
 import crypt.actor.Point;
 
 public class Board {
 
+  private final Game game;
   private static final int NUM_ROWS = 8;
   private static final int NUM_COLS = 23;
   private final Actor[] actors = new Actor[NUM_ROWS * NUM_COLS];
   private int numActors = 0;
 
-  public void addActor(char symbol, Point position, Game game)
+  public Board(Game game) {
+    this.game = game;
+  }
+
+  public void addActor(char symbol, Point position)
   {
     Actor actor = Actor.createActor(symbol, position, game);
     actors[numActors++] = actor;
@@ -19,7 +25,7 @@ public class Board {
   public Actor getActorAt(Point position) {
     for (int i = 0; i < actors.length; ++i) {
       Actor actor = actors[i];
-      if (actor != null && actor.getPosition().equals(position))
+      if (actor.getPosition().equals(position))
         return actor;
     }
     return null;
@@ -29,7 +35,7 @@ public class Board {
     for (int i = 0; i < actors.length; ++i) {
       Actor actor = actors[i];
       if (actor == actorToRemove) {
-        actors[i] = null;
+        actors[i] = new Empty(actorToRemove.getPosition(), game);
         return;
       }
     }
@@ -42,12 +48,7 @@ public class Board {
       for (int c = 0; c < NUM_COLS; ++c) {
         position.set(c, r);
         Actor actor = getActorAt(position);
-        if (actor != null) {
-          actor.draw();
-        }
-        else {
-          System.out.print(' ');
-        }
+        actor.draw();
       }
       System.out.println();
     }
@@ -56,15 +57,19 @@ public class Board {
   public void update() {
     for (int i = 0; i < actors.length; ++i) {
       Actor actor = actors[i];
-      if (actor != null)
-        actor.update();
+      actor.update();
     }
   }
 
-}
+  public void moveActor(Actor actor, Point nextPosition) {
 
-/*
- * private static char TILE_EMPTY = ' '; private static char TILE_WALL = '#';
- * private static char TILE_ROCK = '%'; private static char TILE_CARTER = 'R';
- * private static char TILE_SAND = '*'; private static char TILE_ARTIFACT = 'o';
- */
+    Actor actorAtNextPosition = getActorAt(nextPosition);
+    Point previousPosition = new Point(actor.getPosition());
+
+    // Change positions
+    actor.getPosition().set(nextPosition.x, nextPosition.y);
+    actorAtNextPosition.getPosition().set(previousPosition.x, previousPosition.y);
+
+  }
+
+}

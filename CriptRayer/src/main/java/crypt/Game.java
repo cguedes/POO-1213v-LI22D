@@ -6,7 +6,7 @@ import crypt.input.NonBlockingInput;
 public class Game {
 
   public final Input input = new NonBlockingInput();
-  public final Board board = new Board();
+  public final Board board = new Board(this);
 
   public Input getInput() {
     return input;
