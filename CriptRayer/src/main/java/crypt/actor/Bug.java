@@ -9,8 +9,8 @@ public class Bug extends Actor {
   private static final Point[] directions = 
     { Point.UP, Point.DOWN, Point.LEFT, Point.RIGHT };  
 
-  public Bug(Point position) {
-    super(':', position);
+  public Bug(Point position, Game game) {
+    super(':', position, game);
   }
 
   @Override
@@ -23,7 +23,7 @@ public class Bug extends Actor {
     Point nextPosition = new Point(getPosition());
     nextPosition.add(direction);
 
-    if(Game.board.getActorAt(nextPosition) == null) 
+    if(game.getBoard().getActorAt(nextPosition) == null) 
     {
       getPosition().set(nextPosition.x, nextPosition.y);
     }

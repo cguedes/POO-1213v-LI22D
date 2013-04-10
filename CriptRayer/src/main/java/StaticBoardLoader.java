@@ -25,7 +25,7 @@ public class StaticBoardLoader {
     for (int i = 0; i < row.length(); ++i) {
       char symbol = row.charAt(i);
       actorPosition.set(i, boardRow);
-      game.getBoard().addActor(symbol, actorPosition);
+      game.getBoard().addActor(symbol, actorPosition, game);
     }
     ++boardRow;
   }

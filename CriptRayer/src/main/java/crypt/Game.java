@@ -5,9 +5,12 @@ import crypt.input.NonBlockingInput;
 
 public class Game {
 
-  // public static final Input input = new ScannerInput();
-  public static final Input input = new NonBlockingInput();
-  public static final Board board = new Board();
+  public final Input input = new NonBlockingInput();
+  public final Board board = new Board();
+
+  public Input getInput() {
+    return input;
+  }
 
   public Board getBoard() {
     return board;
