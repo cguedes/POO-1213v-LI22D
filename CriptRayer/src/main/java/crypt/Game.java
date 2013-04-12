@@ -1,5 +1,6 @@
 package crypt;
 
+import crypt.actor.Actor;
 import crypt.input.Input;
 import crypt.input.NonBlockingInput;
 
@@ -28,6 +29,16 @@ public class Game {
       // Aguardar 100ms
       Thread.sleep(100);
     }
+
+  }
+
+  public boolean collide(Actor source, Actor target) {
+
+    boolean hasCollided = target.collide(source);
+    if (hasCollided) {
+      board.moveActor(source, target.getPosition());
+    }
+    return hasCollided;
 
   }
 

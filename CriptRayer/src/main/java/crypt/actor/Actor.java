@@ -47,6 +47,10 @@ public abstract class Actor {
     }
   }
 
+  public boolean collide(Actor other) {
+    return false;
+  }
+
 }
 
 class Wall extends Actor {
@@ -58,17 +62,5 @@ class Wall extends Actor {
 class Rock extends Actor {
   public Rock(Point position, Game game) {
     super('%', position, game);
-  }
-}
-
-class Artifact extends Actor {
-  public Artifact(Point position, Game game) {
-    super('o', position, game);
-  }
-}
-
-class Dirt extends Actor {
-  public Dirt(Point position, Game game) {
-    super('*', position, game);
   }
 }

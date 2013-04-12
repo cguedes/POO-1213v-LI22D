@@ -23,16 +23,24 @@ public class Point {
     set(x, y);
   }
 
-  public void set(int _x, int _y)
+  public Point set(int _x, int _y)
   {
     x = _x;
     y = _y;
+    return this;
   }
 
-  public void add(Point p)
+  public Point add(Point p)
   {
     x += p.x;
     y += p.y;
+    return this;
+  }
+
+  public Point sub(Point p) {
+    x -= p.x;
+    y -= p.y;
+    return this;
   }
 
   @Override
@@ -51,6 +59,10 @@ public class Point {
   @Override
   public String toString() {
     return MessageFormat.format("({0}, {1})", x, y);
+  }
+
+  public Point copy() {
+    return new Point(this.x, this.y);
   }
 
 }

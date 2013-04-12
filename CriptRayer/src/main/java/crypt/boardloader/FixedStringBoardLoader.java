@@ -11,8 +11,8 @@ public class FixedStringBoardLoader implements BoardLoader {
   public void load(Game game) {
     addBoardRow(game, "#######################");
     addBoardRow(game, "#       ***   o       #");
-    addBoardRow(game, "#  %    ###  ### ### :#");
-    addBoardRow(game, "#  %    # #  # # # #  #");
+    addBoardRow(game, "#  %    ###  ### ###  #");
+    addBoardRow(game, "#  %    # #  # # # #: #");
     addBoardRow(game, "#  %%   ###  # # # #  #");
     addBoardRow(game, "#  %    #    ### ###  #");
     addBoardRow(game, "#     R o   o         #");

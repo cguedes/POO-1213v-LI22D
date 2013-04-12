@@ -25,14 +25,15 @@ public class Carter extends Actor {
     nextPosition.add(direction);
 
     Actor actor = game.getBoard().getActorAt(nextPosition);
-    if (actor instanceof Empty) {
-      game.getBoard().moveActor(this, nextPosition);
-    }
+    game.collide(this, actor);
 
-    if (actor instanceof Dirt) {
-      game.getBoard().moveActor(this, nextPosition);
-      game.getBoard().removeActor(actor);
-    }
+    /*
+     * if (actor instanceof Empty) { game.getBoard().moveActor(this,
+     * nextPosition); }
+     * 
+     * if (actor instanceof Dirt) { game.getBoard().moveActor(this,
+     * nextPosition); game.getBoard().removeActor(actor); }
+     */
 
   }
 

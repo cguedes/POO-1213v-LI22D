@@ -8,4 +8,9 @@ public class Empty extends Actor {
     super(' ', position, game);
   }
 
+  @Override
+  public boolean collide(Actor other) {
+    return true;
+  }
+
 }

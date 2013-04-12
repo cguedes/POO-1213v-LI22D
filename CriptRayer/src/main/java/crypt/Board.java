@@ -22,20 +22,25 @@ public class Board {
     actors[numActors++] = actor;
   }
 
+  private void insertEmpty(Point position) {
+    actors[numActors - 1] = new Empty(position, game);
+  }
+
   public Actor getActorAt(Point position) {
     for (int i = 0; i < actors.length; ++i) {
       Actor actor = actors[i];
       if (actor.getPosition().equals(position))
         return actor;
     }
-    return null;
+    throw new ActorNotFoundException(position);
   }
 
   public void removeActor(Actor actorToRemove) {
     for (int i = 0; i < actors.length; ++i) {
       Actor actor = actors[i];
       if (actor == actorToRemove) {
-        actors[i] = new Empty(actorToRemove.getPosition(), game);
+        actors[i] = actors[numActors - 1];
+        actors[numActors - 1] = null;
         return;
       }
     }
@@ -63,12 +68,17 @@ public class Board {
 
   public void moveActor(Actor actor, Point nextPosition) {
 
-    Actor actorAtNextPosition = getActorAt(nextPosition);
+    Actor target = getActorAt(nextPosition);
     Point previousPosition = new Point(actor.getPosition());
 
-    // Change positions
+    // 1. remove target actor
+    removeActor(target);
+
+    // 2. move actor to target position
     actor.getPosition().set(nextPosition.x, nextPosition.y);
-    actorAtNextPosition.getPosition().set(previousPosition.x, previousPosition.y);
+
+    // 3. insert space in previous actor position
+    insertEmpty(previousPosition);
 
   }
 
