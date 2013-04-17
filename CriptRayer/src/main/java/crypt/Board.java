@@ -82,4 +82,12 @@ public class Board {
 
   }
 
+  public int getNumRows() {
+    return NUM_ROWS;
+  }
+
+  public int getNumCols() {
+    return NUM_COLS;
+  }
+
 }

@@ -51,6 +51,10 @@ public abstract class Actor {
     return false;
   }
 
+  public char getSymbol() {
+    return symbol;
+  }
+
 }
 
 class Wall extends Actor {
