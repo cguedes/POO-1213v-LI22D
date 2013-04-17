@@ -19,7 +19,7 @@ public class Artifact extends Actor {
 
   @Override
   public boolean collide(Actor other) {
-    if (other instanceof Carter || other instanceof Artifact) {
+    if (other instanceof Carter) {
       Point dir = this.getPosition().copy().sub(other.getPosition());
       Point targetPosition = getPosition().copy().add(dir);
       Actor target = game.getBoard().getActorAt(targetPosition);
