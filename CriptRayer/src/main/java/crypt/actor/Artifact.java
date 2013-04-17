@@ -23,8 +23,7 @@ public class Artifact extends Actor {
       Point dir = this.getPosition().copy().sub(other.getPosition());
       Point targetPosition = getPosition().copy().add(dir);
       Actor target = game.getBoard().getActorAt(targetPosition);
-      boolean hasCollided = game.collide(this, target);
-      return false;
+      return game.collide(this, target);
     }
 
     return super.collide(other);

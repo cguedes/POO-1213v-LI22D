@@ -1,6 +1,7 @@
 package crypt;
 
 import crypt.actor.Actor;
+import crypt.actor.Point;
 import crypt.input.Input;
 import crypt.input.NonBlockingInput;
 
@@ -34,9 +35,10 @@ public class Game {
 
   public boolean collide(Actor source, Actor target) {
 
+    Point targetPosition = target.getPosition().copy();
     boolean hasCollided = target.collide(source);
     if (hasCollided) {
-      board.moveActor(source, target.getPosition());
+      board.moveActor(source, targetPosition);
     }
     return hasCollided;
 
