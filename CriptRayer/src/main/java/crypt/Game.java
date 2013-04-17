@@ -1,9 +1,12 @@
 package crypt;
 
+import java.text.MessageFormat;
+
 import crypt.actor.Actor;
 import crypt.actor.Point;
 import crypt.input.Input;
 import crypt.input.NonBlockingInput;
+import crypt.view.GameView;
 
 public class Game {
 
@@ -20,12 +23,11 @@ public class Game {
 
   public void run() throws InterruptedException
   {
-    board.draw();
     while (true)
     {
       input.update();
       board.update();
-      board.draw();
+      drawGameViews();
 
       // Aguardar 100ms
       Thread.sleep(100);
@@ -42,6 +44,28 @@ public class Game {
     }
     return hasCollided;
 
+  }
+
+  private final GameView[] gameViews = new GameView[2];
+  private int totalGameViews = 0;
+
+  public void addGameView(GameView gameView) {
+    if (totalGameViews > gameViews.length) {
+      throw new IllegalStateException(MessageFormat.format("Cannot add more that {0} game views.", gameViews.length));
+    }
+    if (gameView == null) {
+      throw new IllegalArgumentException("gameView");
+    }
+
+    gameViews[totalGameViews++] = gameView;
+  }
+
+  private void drawGameViews() {
+    for (GameView gameView : gameViews) {
+      if (gameView != null) {
+        gameView.draw();
+      }
+    }
   }
 
 }

@@ -13,7 +13,7 @@ import crypt.Game;
 import crypt.actor.Actor;
 import crypt.actor.Point;
 
-public class GUIGameView implements BoardListener {
+public class GUIGameView implements GameView, BoardListener {
 
   private final JFrame window;
   private final Game game;
@@ -77,6 +77,11 @@ public class GUIGameView implements BoardListener {
   public void actorUpdated(Actor actor) {
     JLabel actorView = getActorViewAt(actor.getPosition());
     updateActor(actor, actorView);
+  }
+
+  @Override
+  public void draw() {
+    // Nothing to do here because GUI updates asynchronously
   }
 
 }

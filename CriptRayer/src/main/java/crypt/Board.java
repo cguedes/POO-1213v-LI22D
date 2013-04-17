@@ -48,19 +48,6 @@ public class Board {
     }
   }
 
-  public void draw() {
-    Point position = new Point();
-    System.out.println();
-    for (int r = 0; r < NUM_ROWS; ++r) {
-      for (int c = 0; c < NUM_COLS; ++c) {
-        position.set(c, r);
-        Actor actor = getActorAt(position);
-        actor.draw();
-      }
-      System.out.println();
-    }
-  }
-
   public void update() {
     for (int i = 0; i < actors.length; ++i) {
       Actor actor = actors[i];
