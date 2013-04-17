@@ -23,7 +23,9 @@ public class Board {
   }
 
   private void insertEmpty(Point position) {
-    actors[numActors - 1] = new Empty(position, game);
+    Empty empty = new Empty(position, game);
+    actors[numActors - 1] = empty;
+    fireActorUpdated(empty);
   }
 
   public Actor getActorAt(Point position) {
@@ -76,6 +78,7 @@ public class Board {
 
     // 2. move actor to target position
     actor.getPosition().set(nextPosition.x, nextPosition.y);
+    fireActorUpdated(actor);
 
     // 3. insert space in previous actor position
     insertEmpty(previousPosition);
@@ -88,6 +91,25 @@ public class Board {
 
   public int getNumCols() {
     return NUM_COLS;
+  }
+
+  private BoardListener boardListener = null;
+
+  public void addBoardListener(BoardListener boardListener) {
+    if (this.boardListener != null)
+      throw new IllegalStateException("Cannot set more that one boardListener");
+
+    if (boardListener == null)
+      throw new IllegalArgumentException("boardListener");
+
+    this.boardListener = boardListener;
+  }
+
+  private void fireActorUpdated(Actor actor) {
+    if (boardListener != null) {
+      boardListener.actorUpdated(actor);
+    }
+
   }
 
 }

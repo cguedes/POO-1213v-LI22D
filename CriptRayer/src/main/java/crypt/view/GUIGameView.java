@@ -8,20 +8,28 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
+import crypt.BoardListener;
 import crypt.Game;
 import crypt.actor.Actor;
 import crypt.actor.Point;
 
-public class GUIGameView {
+public class GUIGameView implements BoardListener {
+
+  private final JFrame window;
+  private final Game game;
 
   public GUIGameView(Game game) {
+    this.game = game;
 
-    JFrame window = new JFrame("Crypt Raider");
+    window = new JFrame("Crypt Raider");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     createGridWithActors(window, game);
+
     window.setResizable(false);
     window.pack();
     window.setVisible(true);
+
+    game.getBoard().addBoardListener(this);
   }
 
   private void createGridWithActors(JFrame window, Game game) {
@@ -36,19 +44,39 @@ public class GUIGameView {
       for (int c = 0; c < numCols; c++) {
         position.set(c, r);
         Actor actor = game.getBoard().getActorAt(position);
-        JLabel actorView = getActorView(actor);
+        JLabel actorView = createActorView(actor);
         window.getContentPane().add(actorView);
       }
     }
 
   }
 
-  private JLabel getActorView(Actor actor) {
+  private JLabel createActorView(Actor actor) {
     JLabel actorView = new JLabel();
+    updateActor(actor, actorView);
+    return actorView;
+  }
+
+  private JLabel getActorViewAt(Point position) {
+    int componentIdx = position.y * game.getBoard().getNumCols() + position.x;
+    return (JLabel) window.getContentPane().getComponent(componentIdx);
+  }
+
+  private void updateActor(Actor actor, JLabel actorView) {
+    Icon icon = getActorIcon(actor);
+    actorView.setIcon(icon);
+  }
+
+  private Icon getActorIcon(Actor actor) {
     String actorImageName = actor.getClass().getSimpleName();
     Icon icon = new ImageIcon("images/actors/" + actorImageName + ".png");
-    actorView.setIcon(icon);
-    return actorView;
+    return icon;
+  }
+
+  @Override
+  public void actorUpdated(Actor actor) {
+    JLabel actorView = getActorViewAt(actor.getPosition());
+    updateActor(actor, actorView);
   }
 
 }
