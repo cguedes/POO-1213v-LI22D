@@ -23,12 +23,8 @@ public class Bug extends Actor {
 
     Point nextPosition = new Point(getPosition());
     nextPosition.add(direction);
-
-    if (game.getBoard().getActorAt(nextPosition) instanceof Empty)
-    {
-      game.getBoard().moveActor(this, nextPosition);
-    }
-
+    Actor target = game.getBoard().getActorAt(nextPosition);
+    game.collide(this, target);
   }
 
   private Point getRandomDirection() {
