@@ -68,4 +68,14 @@ public class Game {
     }
   }
 
+  int points = 0;
+
+  public int getPoints() {
+    return points;
+  }
+
+  public void addPoints(int pointsToAdd) {
+    this.points += pointsToAdd;
+  }
+
 }

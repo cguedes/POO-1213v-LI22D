@@ -1,5 +1,7 @@
 package crypt.view;
 
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
 
@@ -7,6 +9,7 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import crypt.BoardListener;
 import crypt.Game;
@@ -15,15 +18,24 @@ import crypt.actor.Point;
 
 public class GUIGameView implements GameView, BoardListener {
 
-  private final JFrame window;
   private final Game game;
+
+  private final JPanel pnlTop = new JPanel(new FlowLayout(FlowLayout.LEFT));
+  private final JPanel pnlActorsGrid = new JPanel();
+  private final JLabel lblPoints = new JLabel();
 
   public GUIGameView(Game game) {
     this.game = game;
 
-    window = new JFrame("Crypt Raider");
+    JFrame window = new JFrame("Crypt Raider");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    createGridWithActors(window, game);
+
+    window.getContentPane().setLayout(new BorderLayout());
+    window.getContentPane().add(pnlTop, BorderLayout.NORTH);
+    window.getContentPane().add(pnlActorsGrid);
+
+    buildTopPanel();
+    buildGridWithActors(game);
 
     window.setResizable(false);
     window.pack();
@@ -32,12 +44,17 @@ public class GUIGameView implements GameView, BoardListener {
     game.getBoard().setBoardListener(this);
   }
 
-  private void createGridWithActors(JFrame window, Game game) {
+  private void buildTopPanel() {
+    pnlTop.add(new JLabel("Points: "));
+    pnlTop.add(lblPoints);
+  }
+
+  private void buildGridWithActors(Game game) {
 
     int numRows = game.getBoard().getNumRows();
     int numCols = game.getBoard().getNumCols();
     LayoutManager layout = new GridLayout(numRows, numCols);
-    window.getContentPane().setLayout(layout);
+    pnlActorsGrid.setLayout(layout);
 
     Point position = new Point();
     for (int r = 0; r < numRows; r++) {
@@ -45,7 +62,7 @@ public class GUIGameView implements GameView, BoardListener {
         position.set(c, r);
         Actor actor = game.getBoard().getActorAt(position);
         JLabel actorView = createActorView(actor);
-        window.getContentPane().add(actorView);
+        pnlActorsGrid.add(actorView);
       }
     }
 
@@ -59,7 +76,7 @@ public class GUIGameView implements GameView, BoardListener {
 
   private JLabel getActorViewAt(Point position) {
     int componentIdx = position.y * game.getBoard().getNumCols() + position.x;
-    return (JLabel) window.getContentPane().getComponent(componentIdx);
+    return (JLabel) pnlActorsGrid.getComponent(componentIdx);
   }
 
   private void updateActor(Actor actor, JLabel actorView) {
@@ -82,6 +99,8 @@ public class GUIGameView implements GameView, BoardListener {
   @Override
   public void draw() {
     // Nothing to do here because GUI updates asynchronously
+    int points = game.getPoints();
+    lblPoints.setText(Integer.toString(points));
   }
 
 }

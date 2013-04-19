@@ -1,6 +1,6 @@
 import crypt.Game;
 import crypt.boardloader.BoardLoader;
-import crypt.boardloader.FixedStringBoardLoader;
+import crypt.boardloader.OriginalGameBoardLoader;
 import crypt.view.ConsoleGameView;
 import crypt.view.GUIGameView;
 
@@ -20,8 +20,8 @@ public class CryptRaider {
   }
 
   private static BoardLoader getBoardLoader() {
-    return new FixedStringBoardLoader();
-    // return new OriginalGameBoardLoader(1);
+    // return new FixedStringBoardLoader();
+    return new OriginalGameBoardLoader(1);
   }
 
 }
