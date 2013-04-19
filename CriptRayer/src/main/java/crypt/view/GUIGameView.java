@@ -29,7 +29,7 @@ public class GUIGameView implements GameView, BoardListener {
     window.pack();
     window.setVisible(true);
 
-    game.getBoard().addBoardListener(this);
+    game.getBoard().setBoardListener(this);
   }
 
   private void createGridWithActors(JFrame window, Game game) {

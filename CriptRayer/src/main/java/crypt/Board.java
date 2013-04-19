@@ -82,7 +82,7 @@ public class Board {
 
   private BoardListener boardListener = null;
 
-  public void addBoardListener(BoardListener boardListener) {
+  public void setBoardListener(BoardListener boardListener) {
     if (this.boardListener != null)
       throw new IllegalStateException("Cannot set more that one boardListener");
 
