@@ -1,0 +1,4 @@
+Ana 13
+André 8
+Filipe 2
+Pedro 18
