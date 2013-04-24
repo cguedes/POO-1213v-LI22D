@@ -1,0 +1,26 @@
+12 18
+##################
+#                #
+#                #
+#                #
+#                #
+#                #
+#                #
+#                #
+#                #
+#                #
+#                #
+##################
+
+
+R Carter
+# Wall
+% Rock
+* Dirt
+@ SingleRock
+o Artifact
+U Portal
+: Bug
+k Key
+d Door
+b Bomb
