@@ -4,6 +4,34 @@ import java.io.IOException;
 import java.io.Reader;
 import java.text.MessageFormat;
 
+interface LineCounter {
+  int count(String line);
+}
+
+class NonEmptyLineCounter implements LineCounter {
+  @Override
+  public int count(String line) {
+    return (line == null || line.trim().isEmpty()) ? 0 : 1;
+  }
+}
+
+class TextLineCounter implements LineCounter {
+  private final String text;
+
+  public TextLineCounter(String text) {
+    this.text = text;
+  }
+
+  @Override
+  public int count(String line) {
+    int idx = -1, count = 0;
+    while ((idx = line.indexOf(text, idx + 1)) != -1) {
+      ++count;
+    }
+    return count;
+  }
+}
+
 public class AliceCounter {
 
   public static void main(String[] args)
@@ -16,53 +44,31 @@ public class AliceCounter {
     System.out.println(MessageFormat.format("Number of {0} in file: {1}", text, numAlices));
   }
 
-  private static int getNumberOfNonEmptyLines(String fileName) {
+  private static int countSomethingInLines(String fileName, LineCounter lineCounter) {
     Reader reader = null;
-    int numEmptyLines = 0;
+    int counter = 0;
     try {
-      // reader = new StringReader("Olá\n\nMundo.");
       reader = new FileReader(fileName);
       BufferedReader bufferedReader = new BufferedReader(reader);
       String line = null;
       while ((line = bufferedReader.readLine()) != null) {
-        line = line.trim();
-        if (!line.isEmpty())
-          ++numEmptyLines;
+        counter += lineCounter.count(line);
       }
-      return numEmptyLines;
+      return counter;
     } catch (IOException ex) {
       System.err.println("Error: " + ex.getMessage());
       return -1;
     } finally {
       closeStream(reader);
     }
+  }
+
+  private static int getNumberOfNonEmptyLines(String fileName) {
+    return countSomethingInLines(fileName, new NonEmptyLineCounter());
   }
 
   private static int getTotalOccurencesOf(String textToFind, String fileName) {
-    Reader reader = null;
-    int numOccurs = 0;
-    try {
-      reader = new FileReader(fileName);
-      BufferedReader bufferedReader = new BufferedReader(reader);
-      String line = null;
-      while ((line = bufferedReader.readLine()) != null) {
-        numOccurs += getTotalOccurencesInLine(textToFind, line);
-      }
-      return numOccurs;
-    } catch (IOException ex) {
-      System.err.println("Error: " + ex.getMessage());
-      return -1;
-    } finally {
-      closeStream(reader);
-    }
-  }
-
-  private static int getTotalOccurencesInLine(String textToFind, String line) {
-    int idx = -1, count = 0;
-    while ((idx = line.indexOf(textToFind, idx + 1)) != -1) {
-      ++count;
-    }
-    return count;
+    return countSomethingInLines(fileName, new TextLineCounter(textToFind));
   }
 
   private static void closeStream(Reader reader) {
