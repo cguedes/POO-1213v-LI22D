@@ -32,6 +32,18 @@ class TextLineCounter implements LineCounter {
   }
 }
 
+class NumberOfLettersInLineCounter implements LineCounter {
+  @Override
+  public int count(String line) {
+    int count = 0;
+    for (int i = 0; i < line.length(); ++i) {
+      if (Character.isLetter(line.charAt(i)))
+        count += 1;
+    }
+    return count;
+  }
+}
+
 public class AliceCounter {
 
   public static void main(String[] args)
@@ -42,6 +54,9 @@ public class AliceCounter {
     String text = "Alice";
     int numAlices = getTotalOccurencesOf(text, "alice.txt");
     System.out.println(MessageFormat.format("Number of {0} in file: {1}", text, numAlices));
+
+    int numOfLetters = getNumberOfLettersInFile("alice.txt");
+    System.out.println(MessageFormat.format("Number of letters in file: {0}", numOfLetters));
   }
 
   private static int countSomethingInLines(String fileName, LineCounter lineCounter) {
@@ -69,6 +84,11 @@ public class AliceCounter {
 
   private static int getTotalOccurencesOf(String textToFind, String fileName) {
     return countSomethingInLines(fileName, new TextLineCounter(textToFind));
+  }
+
+  private static int getNumberOfLettersInFile(String fileName) {
+    LineCounter lineCounter = new NumberOfLettersInLineCounter();
+    return countSomethingInLines(fileName, lineCounter);
   }
 
   private static void closeStream(Reader reader) {
