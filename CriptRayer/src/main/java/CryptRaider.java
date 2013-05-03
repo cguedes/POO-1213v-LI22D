@@ -1,3 +1,4 @@
+import crypt.Board;
 import crypt.Game;
 import crypt.boardloader.BoardLoader;
 import crypt.boardloader.OriginalGameBoardLoader;
@@ -10,7 +11,10 @@ public class CryptRaider {
   {
     System.out.println("======== CryptRaider ========");
     Game game = new Game();
-    getBoardLoader().load(game);
+
+    BoardLoader boardLoader = getBoardLoader();
+    Board board = boardLoader.load(game);
+    game.setLevel(board, 1);
 
     game.addGameView(new GUIGameView(game));
     game.addGameView(new ConsoleGameView(game));

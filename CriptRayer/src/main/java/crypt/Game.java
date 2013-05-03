@@ -11,7 +11,8 @@ import crypt.view.GameView;
 public class Game {
 
   public final Input input = new NonBlockingInput();
-  public final Board board = new Board(this);
+  public Board board;
+  private int currentLevel;
 
   public Input getInput() {
     return input;
@@ -19,6 +20,11 @@ public class Game {
 
   public Board getBoard() {
     return board;
+  }
+
+  public void setLevel(Board board, int level) {
+    this.board = board;
+    this.currentLevel = level;
   }
 
   public void run() throws InterruptedException

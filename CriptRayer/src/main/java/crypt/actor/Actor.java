@@ -40,6 +40,8 @@ public abstract class Actor {
       return new Dirt(position, game);
     case 'o':
       return new Artifact(position, game);
+    case 'U':
+      return new Portal(position, game);
     case ' ':
       return new Empty(position, game);
     default:
@@ -66,5 +68,11 @@ class Wall extends Actor {
 class Rock extends Actor {
   public Rock(Point position, Game game) {
     super('%', position, game);
+  }
+}
+
+class Portal extends Actor {
+  public Portal(Point position, Game game) {
+    super('U', position, game);
   }
 }

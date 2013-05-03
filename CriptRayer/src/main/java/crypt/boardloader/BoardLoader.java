@@ -1,9 +1,10 @@
 package crypt.boardloader;
 
+import crypt.Board;
 import crypt.Game;
 
 public interface BoardLoader {
 
-  void load(Game game);
+  Board load(Game game);
 
 }

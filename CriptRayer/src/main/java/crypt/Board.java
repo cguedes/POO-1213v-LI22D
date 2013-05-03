@@ -7,13 +7,16 @@ import crypt.actor.Point;
 public class Board {
 
   private final Game game;
-  private static final int NUM_ROWS = 8;
-  private static final int NUM_COLS = 23;
-  private final Actor[] actors = new Actor[NUM_ROWS * NUM_COLS];
+  private final int numRows;
+  private final int numCols;
+  private final Actor[] actors;
   private int numActors = 0;
 
-  public Board(Game game) {
+  public Board(Game game, int numRows, int numCols) {
     this.game = game;
+    this.numRows = numRows;
+    this.numCols = numCols;
+    this.actors = new Actor[numRows * numCols];
   }
 
   public void addActor(char symbol, Point position)
@@ -73,11 +76,11 @@ public class Board {
   }
 
   public int getNumRows() {
-    return NUM_ROWS;
+    return numRows;
   }
 
   public int getNumCols() {
-    return NUM_COLS;
+    return numCols;
   }
 
   private BoardListener boardListener = null;
