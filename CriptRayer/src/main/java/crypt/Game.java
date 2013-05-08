@@ -5,17 +5,20 @@ import java.text.MessageFormat;
 import crypt.actor.Actor;
 import crypt.actor.Point;
 import crypt.input.Input;
-import crypt.input.NonBlockingInput;
 import crypt.view.GameView;
 
 public class Game {
 
-  public final Input input = new NonBlockingInput();
+  public Input input;
   public Board board;
   private int currentLevel;
 
   public Input getInput() {
     return input;
+  }
+
+  public void setInput(Input gameInput) {
+    input = gameInput;
   }
 
   public Board getBoard() {

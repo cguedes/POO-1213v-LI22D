@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.LayoutManager;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -15,8 +17,10 @@ import crypt.BoardListener;
 import crypt.Game;
 import crypt.actor.Actor;
 import crypt.actor.Point;
+import crypt.input.Input;
 
-public class GUIGameView implements GameView, BoardListener {
+public class GUIGameView implements GameView, BoardListener,
+    Input, KeyListener {
 
   private final Game game;
 
@@ -40,6 +44,9 @@ public class GUIGameView implements GameView, BoardListener {
     window.setResizable(false);
     window.pack();
     window.setVisible(true);
+
+    window.addKeyListener(this);
+    releaseAllKeys();
 
     game.getBoard().setBoardListener(this);
   }
@@ -101,6 +108,43 @@ public class GUIGameView implements GameView, BoardListener {
     // Nothing to do here because GUI updates asynchronously
     int points = game.getPoints();
     lblPoints.setText(Integer.toString(points));
+  }
+
+  protected boolean[] keysDown = new boolean[255];
+
+  protected void releaseAllKeys() {
+    for (int i = 0; i < keysDown.length; i++) {
+      keysDown[i] = false;
+    }
+  }
+
+  @Override
+  public boolean isKeyDown(char key) {
+    return keysDown[key];
+  }
+
+  @Override
+  public void update() {
+  }
+
+  @Override
+  public void keyPressed(KeyEvent e) {
+    char key = Character.toUpperCase(e.getKeyChar());
+    if (Character.isLetter(key)) {
+      keysDown[key] = true;
+    }
+  }
+
+  @Override
+  public void keyReleased(KeyEvent e) {
+    char key = Character.toUpperCase(e.getKeyChar());
+    if (Character.isLetter(key)) {
+      keysDown[key] = false;
+    }
+  }
+
+  @Override
+  public void keyTyped(KeyEvent _) {
   }
 
 }
