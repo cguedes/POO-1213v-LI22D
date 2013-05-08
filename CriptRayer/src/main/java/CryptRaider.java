@@ -3,7 +3,6 @@ import crypt.Game;
 import crypt.boardloader.BoardLoader;
 import crypt.boardloader.OriginalGameBoardLoader;
 import crypt.input.Input;
-import crypt.view.ConsoleGameView;
 import crypt.view.GUIGameView;
 
 public class CryptRaider {
@@ -19,7 +18,7 @@ public class CryptRaider {
 
     GUIGameView gameView = new GUIGameView(game);
     game.addGameView(gameView);
-    game.addGameView(new ConsoleGameView(game));
+    // game.addGameView(new ConsoleGameView(game));
 
     Input gameInput = gameView;
     game.setInput(gameInput);
