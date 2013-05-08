@@ -14,7 +14,12 @@ public class CryptRaider {
 
     BoardLoader boardLoader = getBoardLoader();
     Board board = boardLoader.load(game);
-    game.setLevel(board, 1);
+    // game.setLevel(board, 1);
+
+    Board board2 = new OriginalGameBoardLoader(1).load(game);
+    game.setLevel(board2, 2);
+    game.setLevel(board2, 2);
+    game.setLevel(board2, 2);
 
     GUIGameView gameView = new GUIGameView(game);
     game.addGameView(gameView);
@@ -29,7 +34,7 @@ public class CryptRaider {
 
   private static BoardLoader getBoardLoader() {
     // return new FixedStringBoardLoader();
-    return new OriginalGameBoardLoader(1);
+    return new OriginalGameBoardLoader(0);
   }
 
 }

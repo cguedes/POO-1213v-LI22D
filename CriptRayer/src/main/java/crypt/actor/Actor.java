@@ -70,9 +70,3 @@ class Rock extends Actor {
     super('%', position, game);
   }
 }
-
-class Portal extends Actor {
-  public Portal(Point position, Game game) {
-    super('U', position, game);
-  }
-}

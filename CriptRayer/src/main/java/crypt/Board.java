@@ -19,6 +19,10 @@ public class Board {
     this.actors = new Actor[numRows * numCols];
   }
 
+  public Actor[] getActors() {
+    return actors;
+  }
+
   public void addActor(char symbol, Point position)
   {
     Actor actor = Actor.createActor(symbol, position, game);
@@ -48,6 +52,14 @@ public class Board {
         actors[numActors - 1] = null;
         return;
       }
+    }
+  }
+
+  public void removeActor(Actor actorToRemove, boolean insertEmpty) {
+    removeActor(actorToRemove);
+    if (insertEmpty)
+    {
+      insertEmpty(actorToRemove.getPosition());
     }
   }
 

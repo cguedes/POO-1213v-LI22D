@@ -3,12 +3,15 @@ package crypt;
 import java.text.MessageFormat;
 
 import crypt.actor.Actor;
+import crypt.actor.Artifact;
+import crypt.actor.Carter;
 import crypt.actor.Point;
 import crypt.input.Input;
 import crypt.view.GameView;
 
 public class Game {
 
+  private static final int POINT_TO_ARTIFACT_REMOVE = 10;
   public Input input;
   public Board board;
   private int currentLevel;
@@ -28,6 +31,7 @@ public class Game {
   public void setLevel(Board board, int level) {
     this.board = board;
     this.currentLevel = level;
+    countArtifacts();
   }
 
   public void run() throws InterruptedException
@@ -85,6 +89,33 @@ public class Game {
 
   public void addPoints(int pointsToAdd) {
     this.points += pointsToAdd;
+  }
+
+  int totalArtifacts = 0;
+
+  private void countArtifacts() {
+    for (Actor actor : getBoard().getActors())
+    {
+      if (actor instanceof Artifact)
+        ++totalArtifacts;
+    }
+  }
+
+  public int getNumberOfArtifacts() {
+    return totalArtifacts;
+  }
+
+  public void removeArtifact(Artifact artifactToRemove) {
+    getBoard().removeActor(artifactToRemove, true);
+    --totalArtifacts;
+    addPoints(POINT_TO_ARTIFACT_REMOVE);
+  }
+
+  public void removeCarter(Carter carter) {
+    if (totalArtifacts == 0) {
+      getBoard().removeActor(carter, true);
+      // TODO: Trocar de nível
+    }
   }
 
 }

@@ -27,6 +27,7 @@ public class GUIGameView implements GameView, BoardListener,
   private final JPanel pnlTop = new JPanel(new FlowLayout(FlowLayout.LEFT));
   private final JPanel pnlActorsGrid = new JPanel();
   private final JLabel lblPoints = new JLabel();
+  private final JLabel lblNumArtifacts = new JLabel();
 
   public GUIGameView(Game game) {
     this.game = game;
@@ -54,6 +55,8 @@ public class GUIGameView implements GameView, BoardListener,
   private void buildTopPanel() {
     pnlTop.add(new JLabel("Points: "));
     pnlTop.add(lblPoints);
+    pnlTop.add(new JLabel("Artifacts: "));
+    pnlTop.add(lblNumArtifacts);
   }
 
   private void buildGridWithActors(Game game) {
@@ -105,9 +108,11 @@ public class GUIGameView implements GameView, BoardListener,
 
   @Override
   public void draw() {
-    // Nothing to do here because GUI updates asynchronously
     int points = game.getPoints();
     lblPoints.setText(Integer.toString(points));
+
+    int numArtifacts = game.getNumberOfArtifacts();
+    lblNumArtifacts.setText(Integer.toString(numArtifacts));
   }
 
   protected boolean[] keysDown = new boolean[255];
