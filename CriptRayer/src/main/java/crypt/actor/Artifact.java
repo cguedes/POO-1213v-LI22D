@@ -2,7 +2,7 @@ package crypt.actor;
 
 import crypt.Game;
 
-public class Artifact extends Actor {
+public class Artifact extends Actor implements DestructibleActor {
   public Artifact(Point position, Game game) {
     super('o', position, game);
   }

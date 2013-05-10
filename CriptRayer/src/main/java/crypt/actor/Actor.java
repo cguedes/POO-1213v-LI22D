@@ -40,6 +40,12 @@ public abstract class Actor {
       return new Dirt(position, game);
     case 'o':
       return new Artifact(position, game);
+    case 'b':
+      return new Bomb(position, game);
+    case 'k':
+      return new Key(position, game);
+    case 'd':
+      return new Door(position, game);
     case 'U':
       return new Portal(position, game);
     case ' ':
@@ -65,7 +71,7 @@ class Wall extends Actor {
   }
 }
 
-class Rock extends Actor {
+class Rock extends Actor implements DestructibleActor {
   public Rock(Point position, Game game) {
     super('%', position, game);
   }

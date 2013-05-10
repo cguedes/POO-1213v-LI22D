@@ -94,6 +94,7 @@ public class Game {
   int totalArtifacts = 0;
 
   private void countArtifacts() {
+    totalArtifacts = 0;
     for (Actor actor : getBoard().getActors())
     {
       if (actor instanceof Artifact)

@@ -2,7 +2,7 @@ package crypt.actor;
 
 import crypt.Game;
 
-public class Carter extends Actor {
+public class Carter extends Actor implements DestructibleActor {
 
   public Carter(Point position, Game game) {
     super('R', position, game);
