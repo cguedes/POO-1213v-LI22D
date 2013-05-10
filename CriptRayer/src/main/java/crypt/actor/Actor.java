@@ -42,6 +42,8 @@ public abstract class Actor {
       return new Artifact(position, game);
     case 'b':
       return new Bomb(position, game);
+    case '@':
+      return new SingleRock(position, game);
     case 'k':
       return new Key(position, game);
     case 'd':

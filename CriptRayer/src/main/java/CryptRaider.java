@@ -11,7 +11,7 @@ public class CryptRaider {
     System.out.println("======== CryptRaider ========");
     Game game = new Game();
 
-    int level = 2;
+    int level = 3;
     Board board = new OriginalGameBoardLoader(level).load(game);
     game.setLevel(board, level);
 
