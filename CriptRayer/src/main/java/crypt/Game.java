@@ -5,6 +5,8 @@ import java.text.MessageFormat;
 import crypt.actor.Actor;
 import crypt.actor.Artifact;
 import crypt.actor.Carter;
+import crypt.actor.Door;
+import crypt.actor.Key;
 import crypt.actor.Point;
 import crypt.input.Input;
 import crypt.view.GameView;
@@ -12,6 +14,7 @@ import crypt.view.GameView;
 public class Game {
 
   private static final int POINT_TO_ARTIFACT_REMOVE = 10;
+  private static final int POINT_TO_OPEN_DOOR = 15;
   public Input input;
   public Board board;
   private int currentLevel;
@@ -117,6 +120,18 @@ public class Game {
       getBoard().removeActor(carter, true);
       // TODO: Trocar de nível
     }
+  }
+
+  public void openDoor(Key key) {
+
+    for (Actor actor : getBoard().getActors()) {
+      if (actor instanceof Door) {
+        getBoard().removeActor(actor, true);
+        addPoints(POINT_TO_OPEN_DOOR);
+        return;
+      }
+    }
+
   }
 
 }

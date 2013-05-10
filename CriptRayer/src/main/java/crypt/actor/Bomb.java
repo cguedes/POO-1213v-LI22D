@@ -2,7 +2,9 @@ package crypt.actor;
 
 import crypt.Game;
 
-class Bomb extends Actor implements DestructibleActor {
+public class Bomb extends Actor implements DestroyableActor {
+  private static final int POINT_FOR_ACTOR_DESTRUCTION = 3;
+
   public Bomb(Point position, Game game) {
     super('b', position, game);
   }
@@ -30,8 +32,9 @@ class Bomb extends Actor implements DestructibleActor {
       {
         position.set(getPosition().x + c, getPosition().y + r);
         Actor target = game.getBoard().getActorAt(position);
-        if (target instanceof DestructibleActor) {
+        if (target instanceof DestroyableActor) {
           game.getBoard().removeActor(target, true);
+          game.addPoints(POINT_FOR_ACTOR_DESTRUCTION);
         }
       }
 

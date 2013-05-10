@@ -2,7 +2,7 @@ package crypt.actor;
 
 import crypt.Game;
 
-public class Bug extends Actor implements DestructibleActor {
+public class Bug extends Actor implements DestroyableActor {
 
   private int tick = 0;
   private static final int SPEED = 4;

@@ -71,7 +71,7 @@ class Wall extends Actor {
   }
 }
 
-class Rock extends Actor implements DestructibleActor {
+class Rock extends Actor implements DestroyableActor {
   public Rock(Point position, Game game) {
     super('%', position, game);
   }
