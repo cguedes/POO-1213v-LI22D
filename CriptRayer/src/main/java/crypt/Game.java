@@ -5,9 +5,11 @@ import java.text.MessageFormat;
 import crypt.actor.Actor;
 import crypt.actor.Artifact;
 import crypt.actor.Carter;
+import crypt.actor.DestroyableActor;
 import crypt.actor.Door;
 import crypt.actor.Key;
 import crypt.actor.Point;
+import crypt.boardloader.OriginalGameBoardLoader;
 import crypt.input.Input;
 import crypt.view.GameView;
 
@@ -15,6 +17,8 @@ public class Game {
 
   private static final int POINT_TO_ARTIFACT_REMOVE = 10;
   private static final int POINT_TO_OPEN_DOOR = 15;
+  private static final int POINT_FOR_ACTOR_DESTRUCTION = 3;
+
   public Input input;
   public Board board;
   private int currentLevel;
@@ -33,8 +37,14 @@ public class Game {
 
   public void setLevel(Board board, int level) {
     this.board = board;
-    this.currentLevel = level;
+    currentLevel = level;
     countArtifacts();
+    fireLevelChanged();
+  }
+
+  private void nextLevel() {
+    Board board = new OriginalGameBoardLoader(currentLevel + 1).load(this);
+    setLevel(board, currentLevel + 1);
   }
 
   public void run() throws InterruptedException
@@ -62,6 +72,20 @@ public class Game {
 
   }
 
+  private GameListener gameListener = null;
+
+  private void setGameListener(GameListener gameListener) {
+    if (this.gameListener != null)
+      throw new IllegalStateException("There are already a game listener");
+    this.gameListener = gameListener;
+  }
+
+  private void fireLevelChanged() {
+    if (gameListener != null) {
+      gameListener.levelChanged(currentLevel);
+    }
+  }
+
   private final GameView[] gameViews = new GameView[2];
   private int totalGameViews = 0;
 
@@ -71,6 +95,10 @@ public class Game {
     }
     if (gameView == null) {
       throw new IllegalArgumentException("gameView");
+    }
+
+    if (gameView instanceof GameListener) {
+      setGameListener((GameListener) gameView);
     }
 
     gameViews[totalGameViews++] = gameView;
@@ -118,7 +146,7 @@ public class Game {
   public void removeCarter(Carter carter) {
     if (totalArtifacts == 0) {
       getBoard().removeActor(carter, true);
-      // TODO: Trocar de nível
+      nextLevel();
     }
   }
 
@@ -132,6 +160,30 @@ public class Game {
       }
     }
 
+  }
+
+  public Actor getActorAtDelta(Actor referenceActor, Point direction) {
+    return getBoard().getActorAt(referenceActor.getPosition().copy().add(direction));
+  }
+
+  public Actor getNextActorInSameDirection(Actor first, Actor second) {
+    Point dir = second.getPosition().copy().sub(first.getPosition());
+    Point targetPosition = second.getPosition().copy().add(dir);
+    return getBoard().getActorAt(targetPosition);
+  }
+
+  public void destroyActorsInRectangularArea(Point center, int blastRange) {
+    Point position = new Point();
+    for (int r = -blastRange; r <= blastRange; ++r)
+      for (int c = -blastRange; c <= blastRange; ++c)
+      {
+        position.set(center.x + c, center.y + r);
+        Actor target = getBoard().getActorAt(position);
+        if (target instanceof DestroyableActor) {
+          getBoard().removeActor(target, true);
+          addPoints(POINT_FOR_ACTOR_DESTRUCTION);
+        }
+      }
   }
 
 }

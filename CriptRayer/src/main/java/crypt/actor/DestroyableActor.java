@@ -1,5 +1,5 @@
 package crypt.actor;
 
-interface DestroyableActor {
-  
+public interface DestroyableActor {
+
 }

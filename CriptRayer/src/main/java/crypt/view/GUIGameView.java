@@ -15,41 +15,42 @@ import javax.swing.JPanel;
 
 import crypt.BoardListener;
 import crypt.Game;
+import crypt.GameListener;
 import crypt.actor.Actor;
 import crypt.actor.Point;
 import crypt.input.Input;
 
 public class GUIGameView implements GameView, BoardListener,
-    Input, KeyListener {
+    Input, KeyListener, GameListener {
 
   private final Game game;
 
+  private final JFrame window;
   private final JPanel pnlTop = new JPanel(new FlowLayout(FlowLayout.LEFT));
-  private final JPanel pnlActorsGrid = new JPanel();
   private final JLabel lblPoints = new JLabel();
   private final JLabel lblNumArtifacts = new JLabel();
+  private final JLabel lblNumLevel = new JLabel();
+  private JPanel pnlActorsGrid = null;
 
   public GUIGameView(Game game) {
     this.game = game;
 
-    JFrame window = new JFrame("Crypt Raider");
+    window = new JFrame("Crypt Raider");
     window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
     window.getContentPane().setLayout(new BorderLayout());
     window.getContentPane().add(pnlTop, BorderLayout.NORTH);
-    window.getContentPane().add(pnlActorsGrid);
 
     buildTopPanel();
-    buildGridWithActors(game);
 
     window.setResizable(false);
     window.pack();
     window.setVisible(true);
 
     window.addKeyListener(this);
+    window.requestFocus();
     releaseAllKeys();
 
-    game.getBoard().setBoardListener(this);
   }
 
   private void buildTopPanel() {
@@ -57,10 +58,17 @@ public class GUIGameView implements GameView, BoardListener,
     pnlTop.add(lblPoints);
     pnlTop.add(new JLabel("Artifacts: "));
     pnlTop.add(lblNumArtifacts);
+    pnlTop.add(new JLabel("Level: "));
+    pnlTop.add(lblNumLevel);
   }
 
-  private void buildGridWithActors(Game game) {
+  private void buildGridWithActors() {
 
+    if (pnlActorsGrid != null) {
+      window.getContentPane().remove(pnlActorsGrid);
+    }
+
+    pnlActorsGrid = new JPanel();
     int numRows = game.getBoard().getNumRows();
     int numCols = game.getBoard().getNumCols();
     LayoutManager layout = new GridLayout(numRows, numCols);
@@ -75,7 +83,8 @@ public class GUIGameView implements GameView, BoardListener,
         pnlActorsGrid.add(actorView);
       }
     }
-
+    window.getContentPane().add(pnlActorsGrid);
+    window.pack();
   }
 
   private JLabel createActorView(Actor actor) {
@@ -150,6 +159,13 @@ public class GUIGameView implements GameView, BoardListener,
 
   @Override
   public void keyTyped(KeyEvent _) {
+  }
+
+  @Override
+  public void levelChanged(int level) {
+    buildGridWithActors();
+    game.getBoard().setBoardListener(this);
+    lblNumLevel.setText(Integer.toString(level));
   }
 
 }

@@ -20,10 +20,8 @@ public class Artifact extends Actor implements DestroyableActor {
   @Override
   public boolean collide(Actor other) {
     if (other instanceof Carter) {
-      Point dir = this.getPosition().copy().sub(other.getPosition());
-      Point targetPosition = getPosition().copy().add(dir);
-      Actor target = game.getBoard().getActorAt(targetPosition);
-      return game.collide(this, target);
+      Actor next = game.getNextActorInSameDirection(other, this);
+      return game.collide(this, next);
     }
 
     return super.collide(other);

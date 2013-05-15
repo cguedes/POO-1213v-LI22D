@@ -11,15 +11,15 @@ public class CryptRaider {
     System.out.println("======== CryptRaider ========");
     Game game = new Game();
 
-    int level = 3;
-    Board board = new OriginalGameBoardLoader(level).load(game);
-    game.setLevel(board, level);
-
     GUIGameView gameView = new GUIGameView(game);
     game.addGameView(gameView);
 
     Input gameInput = gameView;
     game.setInput(gameInput);
+
+    int level = 1;
+    Board board = new OriginalGameBoardLoader(level).load(game);
+    game.setLevel(board, level);
 
     game.run();
 
