@@ -49,4 +49,7 @@ public class Bug extends Actor implements DestroyableActor {
     return super.collide(other);
   }
 
+  @Override
+  public void destroy() {
+  }
 }

@@ -17,7 +17,7 @@ public class CryptRaider {
     Input gameInput = gameView;
     game.setInput(gameInput);
 
-    int level = 1;
+    int level = 4;
     Board board = new OriginalGameBoardLoader(level).load(game);
     game.setLevel(board, level);
 

@@ -37,4 +37,9 @@ public class Carter extends Actor implements DestroyableActor {
 
   }
 
+  @Override
+  public void destroy() {
+    // TODO: End game (loose life)
+  }
+
 }

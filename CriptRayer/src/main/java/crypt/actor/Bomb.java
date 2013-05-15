@@ -4,6 +4,8 @@ import crypt.Game;
 
 public class Bomb extends Actor implements DestroyableActor {
 
+  private boolean isFalling = false;
+
   public Bomb(Point position, Game game) {
     super('b', position, game);
   }
@@ -11,12 +13,16 @@ public class Bomb extends Actor implements DestroyableActor {
   @Override
   public void update() {
     Actor target = game.getActorAtDelta(this, Point.DOWN);
-    game.collide(this, target);
+    boolean hasMoved = game.collide(this, target);
 
-    if (target instanceof Rock) {
+    if (isFalling && !hasMoved)
+    {
       game.destroyActorsInRectangularArea(getPosition(), 1);
     }
 
+    if (hasMoved) {
+      isFalling = true;
+    }
     super.update();
   }
 
@@ -27,5 +33,10 @@ public class Bomb extends Actor implements DestroyableActor {
       return game.collide(this, next);
     }
     return super.collide(other);
+  }
+
+  @Override
+  public void destroy() {
+    game.destroyActorsInRectangularArea(getPosition(), 1);
   }
 }

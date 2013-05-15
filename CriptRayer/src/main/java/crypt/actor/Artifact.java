@@ -9,11 +9,8 @@ public class Artifact extends Actor implements DestroyableActor {
 
   @Override
   public void update() {
-
-    Point targetPosition = getPosition().copy().add(Point.DOWN);
-    Actor target = game.getBoard().getActorAt(targetPosition);
+    Actor target = game.getActorAtDelta(this, Point.DOWN);
     game.collide(this, target);
-
     super.update();
   }
 
@@ -25,5 +22,10 @@ public class Artifact extends Actor implements DestroyableActor {
     }
 
     return super.collide(other);
+  }
+
+  @Override
+  public void destroy() {
+    // TODO: End game
   }
 }

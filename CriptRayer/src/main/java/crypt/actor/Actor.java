@@ -77,4 +77,8 @@ class Rock extends Actor implements DestroyableActor {
   public Rock(Point position, Game game) {
     super('%', position, game);
   }
+
+  @Override
+  public void destroy() {
+  }
 }

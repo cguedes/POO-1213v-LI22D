@@ -2,7 +2,7 @@ package crypt.actor;
 
 import crypt.Game;
 
-public class Dirt extends Actor {
+public class Dirt extends Actor implements DestroyableActor {
   private static final int POINTS_FOR_REMOVE = 5;
 
   public Dirt(Point position, Game game) {
@@ -17,5 +17,9 @@ public class Dirt extends Actor {
     }
 
     return super.collide(other);
+  }
+
+  @Override
+  public void destroy() {
   }
 }

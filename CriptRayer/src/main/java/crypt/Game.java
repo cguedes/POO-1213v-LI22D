@@ -180,6 +180,11 @@ public class Game {
         position.set(center.x + c, center.y + r);
         Actor target = getBoard().getActorAt(position);
         if (target instanceof DestroyableActor) {
+          DestroyableActor dActor = (DestroyableActor) target;
+
+          if (!(r == 0 && c == 0)) {
+            dActor.destroy();
+          }
           getBoard().removeActor(target, true);
           addPoints(POINT_FOR_ACTOR_DESTRUCTION);
         }
