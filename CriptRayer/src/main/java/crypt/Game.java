@@ -11,6 +11,7 @@ import crypt.actor.Key;
 import crypt.actor.Point;
 import crypt.boardloader.OriginalGameBoardLoader;
 import crypt.input.Input;
+import crypt.scores.Highscores;
 import crypt.view.GameView;
 
 public class Game {
@@ -22,6 +23,9 @@ public class Game {
   public Input input;
   public Board board;
   private int currentLevel;
+
+  private String username = "BART";
+  private Highscores highscores = new Highscores();
 
   public Input getInput() {
     return input;
@@ -189,6 +193,11 @@ public class Game {
           addPoints(POINT_FOR_ACTOR_DESTRUCTION);
         }
       }
+  }
+
+  public void carterDestroyed() {
+    // Save highscores
+    highscores.tryAddEntry(username, points, currentLevel);
   }
 
 }

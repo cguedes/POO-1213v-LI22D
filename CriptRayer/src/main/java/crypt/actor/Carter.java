@@ -26,20 +26,21 @@ public class Carter extends Actor implements DestroyableActor {
 
     Actor actor = game.getBoard().getActorAt(nextPosition);
     game.collide(this, actor);
+  }
 
-    /*
-     * if (actor instanceof Empty) { game.getBoard().moveActor(this,
-     * nextPosition); }
-     * 
-     * if (actor instanceof Dirt) { game.getBoard().moveActor(this,
-     * nextPosition); game.getBoard().removeActor(actor); }
-     */
+  @Override
+  public boolean collide(Actor other) {
 
+    if (other instanceof Bug) {
+      game.carterDestroyed();
+    }
+
+    return super.collide(other);
   }
 
   @Override
   public void destroy() {
-    // TODO: End game (loose life)
+    game.carterDestroyed();
   }
 
 }

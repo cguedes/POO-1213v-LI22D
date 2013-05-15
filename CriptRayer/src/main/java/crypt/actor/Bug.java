@@ -46,6 +46,10 @@ public class Bug extends Actor implements DestroyableActor {
       game.destroyActorsInRectangularArea(getPosition(), 1);
     }
 
+    if (other instanceof Carter) {
+      game.carterDestroyed();
+    }
+
     return super.collide(other);
   }
 
