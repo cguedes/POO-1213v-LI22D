@@ -2,7 +2,7 @@ package crypt.scores;
 
 import java.text.MessageFormat;
 
-public class Score {
+public class Score implements Comparable<Score> {
 
   private final String username;
   private final int points;
@@ -32,6 +32,11 @@ public class Score {
 
   public int getLevel() {
     return level;
+  }
+
+  @Override
+  public int compareTo(Score otherScore) {
+    return otherScore.points - this.points;
   }
 
 }

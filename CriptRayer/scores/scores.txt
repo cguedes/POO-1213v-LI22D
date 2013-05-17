@@ -1,4 +1,10 @@
-LISA 123 10
-BART 3 1
-BART 62 4
-BART 16 4
+LISA    123 10
+BART    62 4
+guedes  40 2
+BART    35 2
+BART    16 4
+guedess 16 4
+cg      16 4
+cguedes 16 4
+guedes  16 4
+fooooo  16 4

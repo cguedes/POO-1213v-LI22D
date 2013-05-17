@@ -24,7 +24,7 @@ public class Game {
   public Board board;
   private int currentLevel;
 
-  private String username = "BART";
+  private String username;
   private Highscores highscores = new Highscores();
 
   public Input getInput() {
@@ -193,6 +193,10 @@ public class Game {
           addPoints(POINT_FOR_ACTOR_DESTRUCTION);
         }
       }
+  }
+
+  public void setUsername(String username) {
+    this.username = username;
   }
 
   public void carterDestroyed() {

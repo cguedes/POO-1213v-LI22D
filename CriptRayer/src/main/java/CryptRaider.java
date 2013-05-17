@@ -1,3 +1,5 @@
+import javax.swing.JOptionPane;
+
 import crypt.Board;
 import crypt.Game;
 import crypt.boardloader.OriginalGameBoardLoader;
@@ -20,6 +22,10 @@ public class CryptRaider {
     int level = 4;
     Board board = new OriginalGameBoardLoader(level).load(game);
     game.setLevel(board, level);
+
+    // Ask user name
+    String username = JOptionPane.showInputDialog("What is your name?");
+    game.setUsername(username);
 
     game.run();
 

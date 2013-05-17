@@ -8,6 +8,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class Highscores {
@@ -19,13 +21,33 @@ public class Highscores {
 
   public Highscores() {
     loadScores();
+
+    showHighscoresSortedByLevel();
   }
 
   public void tryAddEntry(String username, int points, int level) {
 
     Score score = new Score(username, points, level);
-    scores[nextScoreIdx++] = score;
+    if (nextScoreIdx < scores.length) {
+      scores[nextScoreIdx++] = score;
+    } else {
+      // Scores are full! We only add if last score is worst that current score
+      Comparable<Score> lastScore = scores[MAX_SCORES - 1];
+      if (lastScore.compareTo(score) > 0) {
+        scores[MAX_SCORES - 1] = score;
+      }
+    }
+
+    sortHighscoresWithNaturalOrder();
     saveScores();
+
+    showHighscoresSortedByLevel();
+  }
+
+  private void sortHighscoresWithNaturalOrder() {
+    Score[] sortedScores = Arrays.copyOf(scores, nextScoreIdx);
+    Arrays.sort(sortedScores);
+    scores = Arrays.copyOf(sortedScores, MAX_SCORES);
   }
 
   private void loadScores() {
@@ -103,6 +125,10 @@ public class Highscores {
     }
 
     // TEMP CODE
+    showScores(scores);
+  }
+
+  private void showScores(Score[] scores) {
     System.out.println("SCORES");
     System.out.println("===============");
     for (Score score : scores) {
@@ -111,6 +137,48 @@ public class Highscores {
       }
     }
     System.out.println();
+  }
+
+  private void showHighscoresSortedByLevel() {
+
+    Score[] scoresOrderByLevel = Arrays.copyOf(scores, MAX_SCORES);
+
+    // Arrays.sort(scoresOrderByLevel, new ScoreComparatorByLevel());
+    // Arrays.sort(scoresOrderByLevel, new InternalScoreComparatorByLevel());
+    // Arrays.sort(scoresOrderByLevel, new PrivateScoreComparatorByLevel());
+    Arrays.sort(scoresOrderByLevel, new Comparator<Score>() {
+      @Override
+      public int compare(Score a, Score b) {
+        return b.getLevel() - a.getLevel();
+      }
+    });
+    showScores(scoresOrderByLevel);
+
+    Arrays.sort(scoresOrderByLevel, new Comparator<Score>() {
+      @Override
+      public int compare(Score a, Score b) {
+        return a.getUsername().compareTo(b.getUsername());
+      }
+    });
+
+    showScores(scoresOrderByLevel);
+  }
+
+  static class InternalScoreComparatorByLevel implements Comparator<Score> {
+
+    @Override
+    public int compare(Score a, Score b) {
+      return b.getLevel() - a.getLevel();
+    }
+
+  }
+
+}
+
+class PrivateScoreComparatorByLevel implements Comparator<Score> {
+  @Override
+  public int compare(Score a, Score b) {
+    return b.getLevel() - a.getLevel();
   }
 
 }
