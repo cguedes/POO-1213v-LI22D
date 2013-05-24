@@ -13,8 +13,10 @@ public class CryptRaider {
     System.out.println("======== CryptRaider ========");
     Game game = new Game();
 
-    GUIGameView gameView = new GUIGameView(game);
-    game.addGameView(gameView);
+    GUIGameView gameView = addGameView(game);
+    addGameView(game);
+    // addGameView(game);
+    // addGameView(game);
 
     Input gameInput = gameView;
     game.setInput(gameInput);
@@ -29,6 +31,12 @@ public class CryptRaider {
 
     game.run();
 
+  }
+
+  private static GUIGameView addGameView(Game game) {
+    GUIGameView gameView = new GUIGameView(game);
+    game.addGameView(gameView);
+    return gameView;
   }
 
 }

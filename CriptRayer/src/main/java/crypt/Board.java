@@ -1,5 +1,8 @@
 package crypt;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import crypt.actor.Actor;
 import crypt.actor.Empty;
 import crypt.actor.Point;
@@ -95,23 +98,19 @@ public class Board {
     return numCols;
   }
 
-  private BoardListener boardListener = null;
+  private Collection<BoardListener> boardListeners = new ArrayList<BoardListener>();
 
   public void setBoardListener(BoardListener boardListener) {
-    if (this.boardListener != null)
-      throw new IllegalStateException("Cannot set more that one boardListener");
-
     if (boardListener == null)
       throw new IllegalArgumentException("boardListener");
 
-    this.boardListener = boardListener;
+    this.boardListeners.add(boardListener);
   }
 
   private void fireActorUpdated(Actor actor) {
-    if (boardListener != null) {
+    for (BoardListener boardListener : boardListeners) {
       boardListener.actorUpdated(actor);
     }
-
   }
 
 }

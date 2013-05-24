@@ -1,6 +1,7 @@
 package crypt;
 
-import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import crypt.actor.Actor;
 import crypt.actor.Artifact;
@@ -76,43 +77,39 @@ public class Game {
 
   }
 
-  private GameListener gameListener = null;
+  private Collection<GameListener> gameListeners = new ArrayList<GameListener>();
 
-  private void setGameListener(GameListener gameListener) {
-    if (this.gameListener != null)
-      throw new IllegalStateException("There are already a game listener");
-    this.gameListener = gameListener;
+  private void addGameListener(GameListener gameListener) {
+    if (this.gameListeners == null)
+      throw new IllegalArgumentException("gameListener");
+
+    this.gameListeners.add(gameListener);
   }
 
   private void fireLevelChanged() {
-    if (gameListener != null) {
+
+    for (GameListener gameListener : gameListeners) {
       gameListener.levelChanged(currentLevel);
     }
   }
 
-  private final GameView[] gameViews = new GameView[2];
-  private int totalGameViews = 0;
+  private final Collection<GameView> gameViews = new ArrayList<GameView>();
 
   public void addGameView(GameView gameView) {
-    if (totalGameViews > gameViews.length) {
-      throw new IllegalStateException(MessageFormat.format("Cannot add more that {0} game views.", gameViews.length));
-    }
     if (gameView == null) {
       throw new IllegalArgumentException("gameView");
     }
 
     if (gameView instanceof GameListener) {
-      setGameListener((GameListener) gameView);
+      addGameListener((GameListener) gameView);
     }
 
-    gameViews[totalGameViews++] = gameView;
+    gameViews.add(gameView);
   }
 
   private void drawGameViews() {
     for (GameView gameView : gameViews) {
-      if (gameView != null) {
-        gameView.draw();
-      }
+      gameView.draw();
     }
   }
 
