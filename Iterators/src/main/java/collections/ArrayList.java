@@ -19,7 +19,7 @@ public class ArrayList /* implements List<Integer> */{
   }
 
   public boolean addAll(Collection<Integer> col) {
-    // ensureCapacity(col.size());
+    ensureCapacity(col.size());
     for (Integer val : col)
       add(val);
 
@@ -33,12 +33,22 @@ public class ArrayList /* implements List<Integer> */{
     return true;
   }
 
+  public void ensureCapacity(int newCapacity) {
+    if (data.length >= newCapacity)
+      return;
+
+    Integer[] newData = new Integer[newCapacity];
+    System.arraycopy(data, 0, newData, 0, size);
+    data = newData;
+  }
+
   public int size() {
     return size;
   }
 
   public boolean add(Integer elem) {
     // TODO: Ensure capacity
+    ensureCapacity(size() + size() * 1 / 3 + 1);
     data[size++] = elem;
     return true;
   }
@@ -79,6 +89,23 @@ public class ArrayList /* implements List<Integer> */{
       data[i] = null;
     }
     size = 0;
+
+  }
+
+  public Integer remove(int idx) {
+
+    if (idx < 0 || idx > size())
+      throw new ArrayIndexOutOfBoundsException(idx);
+
+    Integer val = get(idx);
+
+    for (int i = idx; i < size(); ++i) {
+      data[i] = data[i + 1];
+    }
+
+    --size;
+
+    return val;
 
   }
 

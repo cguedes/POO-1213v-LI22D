@@ -3,9 +3,10 @@ package collections;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 
+import java.util.Collection;
 import java.util.Iterator;
+import java.util.TreeSet;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 public class ArrayListTests {
@@ -31,7 +32,7 @@ public class ArrayListTests {
   }
 
   @Test
-  public void shouldAddTreeElement() {
+  public void shouldAddThreeElement() {
     ArrayList list = new ArrayList();
     assertTrue(list.add(42));
     assertTrue(list.add(2));
@@ -57,7 +58,6 @@ public class ArrayListTests {
   }
 
   @Test
-  @Ignore
   public void shouldGrowOfCapacityWasReached() {
     ArrayList list = new ArrayList(2);
     assertTrue(list.add(42));
@@ -139,6 +139,29 @@ public class ArrayListTests {
     assertEquals(-1, idx);
 
     assertTrue(list.contains(new FindByText("2")));
+  }
+
+  @Test
+  public void shouldAddAllValuesInCollection() {
+    ArrayList list = new ArrayList();
+
+    Collection<Integer> col = new TreeSet<Integer>();
+    col.add(4);
+    col.add(3);
+    col.add(14);
+    col.add(0);
+    col.add(2);
+    col.add(1);
+    col.add(40);
+    col.add(-2);
+    col.add(11);
+    col.add(7);
+    col.add(-17);
+
+    assertTrue(list.isEmpty());
+
+    assertTrue(list.addAll(col));
+    assertEquals(col.size(), list.size());
   }
 
   private static class FindByText {
